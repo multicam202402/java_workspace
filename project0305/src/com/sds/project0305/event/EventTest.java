@@ -23,6 +23,10 @@ public class EventTest extends Frame {
 		this.setLayout(new FlowLayout());
 		add(bt);
 		
+		//버튼에 리스너 연결 js와 상당히 흡사
+		MyActionListener my=new MyActionListener();
+		bt.addActionListener(my);//리스너 객체의 인스턴스가 매개변수 전달되어야 된다...
+		
 		this.setBackground(Color.YELLOW);//프레임에 배경색 적용
 		setSize(300,400);//윈도우 크기 지정
 		setVisible(true); //윈도우 창 보이게 처리
