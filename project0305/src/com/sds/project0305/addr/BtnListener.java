@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 //사용자의 액션이벤트를 감지할 리스너 클래스 정의 
 public class BtnListener implements ActionListener{
 	FrameA frameA;//이 객체의 인스턴스가 소멸할때까지 살아있슴
-	FrameB frameb;
+	FrameB frameb; //null
 	
 	//FrameA 를 전달받을 수 있는 생성자를 정의하자 
 	//아래의 생성자 메서드를 호출하는 자는 반드시 FrameA 형인
@@ -39,7 +39,10 @@ public class BtnListener implements ActionListener{
 		
 		//open 버튼을  누르면..
 		if(obj == frameA.bt_open) {
-			frameb = new FrameB();
+			//존재하지 않을때만 즉 친구가 한명도 없을때만..new할 꺼임
+			if(frameb == null) { //frameb의 주소값일 비어있을때 즉 친구가 없을때만 생성하겠다..
+				frameb = new FrameB();
+			}
 		}else if(obj == frameA.bt_color[0]) {
 			System.out.println("FrameB의 배경색 빨간색을 원하는 군요");
 			frameb.setBackground(Color.RED);
@@ -54,10 +57,13 @@ public class BtnListener implements ActionListener{
 			frameb.setBackground(Color.GREEN);
 		}else if(obj == frameA.bt_color[4]) {
 			System.out.println("FrameB의 배경색 파란색을 원하는 군요");
+			frameb.setBackground(Color.BLUE);
 		}else if(obj == frameA.bt_color[5]) {
-			System.out.println("FrameB의 배경색 남색을 원하는 군요");
+			System.out.println("FrameB의 배경색 마젠타를 원하는 군요");
+			frameb.setBackground(Color.MAGENTA);
 		}else if(obj == frameA.bt_color[6]) {
-			System.out.println("FrameB의 배경색 보라색을 원하는 군요");
+			System.out.println("FrameB의 배경색 회색을 원하는 군요");
+			frameb.setBackground(Color.GRAY);
 		}
 
 		
