@@ -1,6 +1,6 @@
 package com.sds.project0305.addr;
 
-import java.awt.Button;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,12 +42,16 @@ public class BtnListener implements ActionListener{
 			frameb = new FrameB();
 		}else if(obj == frameA.bt_color[0]) {
 			System.out.println("FrameB의 배경색 빨간색을 원하는 군요");
+			frameb.setBackground(Color.RED);
 		}else if(obj == frameA.bt_color[1]) {
 			System.out.println("FrameB의 배경색 주황색을 원하는 군요");
+			frameb.setBackground(Color.ORANGE);
 		}else if(obj == frameA.bt_color[2]) {
 			System.out.println("FrameB의 배경색 노란색을 원하는 군요");
+			frameb.setBackground(Color.YELLOW);
 		}else if(obj == frameA.bt_color[3]) {
 			System.out.println("FrameB의 배경색 초록색을 원하는 군요");
+			frameb.setBackground(Color.GREEN);
 		}else if(obj == frameA.bt_color[4]) {
 			System.out.println("FrameB의 배경색 파란색을 원하는 군요");
 		}else if(obj == frameA.bt_color[5]) {
