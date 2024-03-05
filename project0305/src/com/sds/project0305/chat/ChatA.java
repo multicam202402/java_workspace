@@ -55,7 +55,7 @@ public class ChatA extends Frame implements ActionListener, KeyListener{
 		System.out.println("나 눌럿어?");
 		//친구인 ChatB를 생성하자
 		if(chatB==null)
-			chatB = new ChatB();
+			chatB = new ChatB(this); //이 찰나를 놓치지 말고, ChatB에게 ChatA 의 주소값을 전달해주자
 	}
 	
 	// KeyListener 추상메서드들 오버라이딩
@@ -73,6 +73,9 @@ public class ChatA extends Frame implements ActionListener, KeyListener{
 			
 			//chatB area에 채팅 로그 추가
 			this.chatB.area.append(msg+"\n");
+			
+			//로그를 남긴 후에는 입력했던 텍스트를 다시 초기화 
+			t.setText("");
 		}
 		
 	}
