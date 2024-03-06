@@ -1,7 +1,6 @@
 package com.sds.project0305.member;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,18 +41,21 @@ public class MemberJoin extends JFrame implements WindowListener, ActionListener
 	JTextField t_id; //아이디 
 	JPasswordField t_pass; //비밀번호 
 	JTextField t_jumin1, t_jumin2;//주민번호 앞,뒤자리 
-	//Checkbox를 그룹화 시켜놓아야 라디오가 등장, html 에서도  radio는 배열로 존재시켜야 함 
+	//JCheckBox를 그룹화 시켜놓아야 라디오가 등장, html 에서도  radio는 배열로 존재시켜야 함 
 	CheckboxGroup cg;
-	Checkbox man;
-	Checkbox woman;
 	
-	Checkbox[] hobby = new Checkbox[4]; //취미
+	JCheckBox man;
+	JCheckBox woman;
+	
+	JCheckBox[] hobby = new JCheckBox[4]; //취미
 	String[] hobbyName= {"Travel","Programming","exercise", "pet protection"};
 	JTextField t_profile; //프로필 사진 경로 
 	JTextField t_filename, t_ext; //파일명과 확장자 
 	JTextField t_zip1, t_zip2; //우편번호 앞,뒤자리 
 	JButton bt_regist; //가입버튼
 	
+	int hobby_count=0;//체크박스의 체크 총 횟수를 알수있는 지표 
+								//1미만이면, 취미를 하나도 체크하지 않은 사람이므로, 욕!!!
 	
 	public MemberJoin() {
 		//생성
@@ -71,13 +74,15 @@ public class MemberJoin extends JFrame implements WindowListener, ActionListener
 		t_jumin1 = new JTextField();
 		t_jumin2 = new JTextField();
 		cg = new CheckboxGroup(); //그룹을 생성한다.
-		man = new Checkbox("man", cg, false); //cg 그룹에 소속시킨다
-		woman = new Checkbox("woman", cg, false); //cg 그룹에 소속시킨다
+		man = new JCheckbox("man", cg, false); //cg 그룹에 소속시킨다
+		woman = new JCheckbox("woman", cg, false); //cg 그룹에 소속시킨다
 		
 		
 		for(int i=0;i<hobby.length;i++) {
-			hobby[i] = new Checkbox(hobbyName[i]);
+			hobby[i] = new JCheckBox(hobbyName[i]);
+			//체크박스와 리스너 연결			
 		}
+		
 		t_profile = new JTextField();
 		t_filename = new JTextField();
 		t_ext = new JTextField();
@@ -203,6 +208,10 @@ public class MemberJoin extends JFrame implements WindowListener, ActionListener
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		
+		//체크박스 중 하나를 눌렀을때..
+		
+		//버튼을 눌럿을때
 		//System.out.println("눌렀어?");//유효성
 		checkForm();
 	}
@@ -218,9 +227,9 @@ public class MemberJoin extends JFrame implements WindowListener, ActionListener
 		int result = Integer.parseInt(s);//  "1" 을 정수 1로 변환
 		
  		if(result==1) { //남자라면
-			man.   //체크되어있게
+			man.setState(true);   //체크되어있게
 		}else if(result==2){//여자라면
-			//체크되어있게..
+			woman.setState(true);//체크되어있게..
 		}
  		
 	}

@@ -1,7 +1,7 @@
 package com.sds.project0304.gui;
 
 import java.awt.Button;
-import java.awt.Checkbox;
+import java.awt.JCheckBox;
 import java.awt.Choice;
 import java.awt.FlowLayout;
 /*너비 500, 높이 600 인 윈도우창을 생성해보자
@@ -65,8 +65,8 @@ public class WinTest {
 		ch.add("JSP");
 		ch.add("Spring");
 		
-		//html에서의 checkbox는 java에서도 checkbox 라 함 
-		Checkbox box=new Checkbox("Travel");
+		//html에서의 JCheckBox는 java에서도 JCheckBox 라 함 
+		JCheckBox box=new JCheckBox("Travel");
 		
 		
 		frame.add(bt);//윈도우창에 버튼부착
