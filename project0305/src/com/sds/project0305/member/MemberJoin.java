@@ -102,6 +102,11 @@ public class MemberJoin extends JFrame implements WindowListener{
 		t_filename.setPreferredSize(d3);
 		t_ext.setPreferredSize(d3);
 		
+		//우편번호 스타일 
+		la_zip.setPreferredSize(d);
+		t_zip1.setPreferredSize(d2);
+		t_zip2.setPreferredSize(d2);
+		
 		
 		//조립
 		add(la_title, BorderLayout.NORTH); //프레임의 북쪽에 부착 
@@ -129,6 +134,13 @@ public class MemberJoin extends JFrame implements WindowListener{
 		p_content.add(t_filename);
 		p_content.add(t_ext);
 		
+		//우편번호 부착
+		p_content.add(la_zip);
+		p_content.add(t_zip1);
+		p_content.add(t_zip2);
+		
+		//버튼 부착 
+		p_content.add(bt_regist);
 		
 		//현재 프레임과 리스너 연결 
 		//현재프레임.addWindowListener( 리스너 구현한 者)
