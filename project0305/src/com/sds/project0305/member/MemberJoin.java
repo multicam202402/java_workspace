@@ -5,6 +5,8 @@ import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,8 +21,13 @@ import javax.swing.JTextField;
  * os 중립적인  자체적인 Look&Feel 을 가진다..
  * No 걱정 - awt와 크게 달라지지 않고 기존의 awt 컴퍼넌트에 J접두어 붙이자 
  * 그리고 여전히 java.awt 의 레이아웃 배치관리자와 java.awt.event  여전히 java.awt 를 유지   
+ * 
+ * 이벤트 프로그래밍의 3단계 절차 
+ * 1) 적절한 리스너 선택 
+ * 2) 해당 리스너의 메서드 오버라이드(개발자가 원하는 코드로 재정의)
+ * 3) 컴포넌트와 리스너 연결
  * */
-public class MemberJoin extends JFrame {
+public class MemberJoin extends JFrame implements WindowListener{
 	JLabel la_title; //회원가입 제목 
 	JPanel p_content; // 가운데 영역 
 	JLabel la_id, la_pass, la_jumin, la_gender, la_hobby, la_file, la_zip;
@@ -71,9 +78,19 @@ public class MemberJoin extends JFrame {
 		p_content.setBackground(Color.YELLOW);
 		
 		//아이디스타일 
-	 	Dimension d=new Dimension(270, 25);
-		la_id.setPreferredSize(d);
+	 	Dimension d=new Dimension(290, 28);
+		la_id.setPreferredSize(d);		
 		t_id.setPreferredSize(d);
+		
+		//패스워드 스타일 
+		la_pass.setPreferredSize(d);
+		t_pass.setPreferredSize(d);
+		
+		//주민번호 스타일 
+		la_jumin.setPreferredSize(d);
+		Dimension d2 = new Dimension(130, 28);
+		t_jumin1.setPreferredSize(d2);
+		t_jumin2.setPreferredSize(d2);
 		
 		
 		//조립
@@ -83,12 +100,83 @@ public class MemberJoin extends JFrame {
 		p_content.add(la_id);
 		p_content.add(t_id);
 		
+		p_content.add(la_pass);
+		p_content.add(t_pass);
+		
+		p_content.add(la_jumin);
+		p_content.add(t_jumin1);
+		p_content.add(t_jumin2);
+		
+		
+		//현재 프레임과 리스너 연결 
+		//현재프레임.addWindowListener( 리스너 구현한 者)
+		//this 의 정의? 레퍼런스 변수이다.
+		this.addWindowListener(this);
+		
 		//윈도우 설정 
 		setSize(700,500);
 		setVisible(true);
 	}
+	
+	
+	
 	public static void main(String[] args) {
-		new MemberJoin();
+		MemberJoin mj = new MemberJoin();
+	}
+
+
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		System.exit(0); //프로세스(실행중인 프로그램) 종료
+	}
+
+
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
