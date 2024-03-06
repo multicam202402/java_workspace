@@ -95,6 +95,14 @@ public class MemberJoin extends JFrame implements WindowListener{
 		//취미 라벨 스타일
 		la_hobby.setPreferredSize(d);
 		
+		//프로필 스타일 
+		la_file.setPreferredSize(d);
+		Dimension d3 = new Dimension(110, 28);
+		t_profile.setPreferredSize(d3);
+		t_filename.setPreferredSize(d3);
+		t_ext.setPreferredSize(d3);
+		
+		
 		//조립
 		add(la_title, BorderLayout.NORTH); //프레임의 북쪽에 부착 
 		add(p_content); // 센터에 부착 
@@ -114,6 +122,13 @@ public class MemberJoin extends JFrame implements WindowListener{
 		for(int i=0; i<hobby.length;i++) {
 			p_content.add(hobby[i]);
 		}
+		
+		//프로필 사진 부착 
+		p_content.add(la_file);
+		p_content.add(t_profile);
+		p_content.add(t_filename);
+		p_content.add(t_ext);
+		
 		
 		//현재 프레임과 리스너 연결 
 		//현재프레임.addWindowListener( 리스너 구현한 者)
