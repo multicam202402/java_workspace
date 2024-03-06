@@ -5,8 +5,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import javax.swing.JOptionPane;
+
 public class MyCanvas extends Canvas{
 	int index; //몇번째 이미지를 접근해야 할지를 결정짓는 변수
+	GalleryMain galleryMain; //필요하면 보유하자 null
 	
 	String[] filename= {
 		"D:\\java_workspace\\project0306\\images\\card\\h1.png",
@@ -26,7 +29,9 @@ public class MyCanvas extends Canvas{
 	
 	Toolkit kit=Toolkit.getDefaultToolkit(); //
 	
-	public MyCanvas() {
+	public MyCanvas(GalleryMain galleryMain ) {
+		this.galleryMain = galleryMain;//프레임 넘겨받음
+		
 		for(int i=0;i<imageArray.length;i++) {
 			imageArray[i] = kit.getImage(filename[i]);//이미지 생성 후 배열에 넣기
 		}
@@ -34,14 +39,24 @@ public class MyCanvas extends Canvas{
 	
 	//이전 이미지 보여주기
 	public void prev() {
-		index--;
-		repaint();//다시 그리기		
+		if(index>=1) { //1까지만 아래의 코드가 실행되게..
+			index--;
+			repaint();//다시 그리기
+		}else {
+			//경고 창
+			JOptionPane.showMessageDialog(galleryMain , "이미 처음 이미지입니다");
+		}
 	}
 	
 	//다음 이미지 보여주기 
 	public void next() {
-		index++;
-		repaint();//다시 그리기
+		if(index< imageArray.length-1) { //배열이 10이라면 8까지만...아래의 코드가 동작 
+			index++;
+			repaint();//다시 그리기
+		}else {
+			//경고 창
+			JOptionPane.showMessageDialog(galleryMain , "다음 이미지가 없습니다");
+		}
 	}
 
 	@Override

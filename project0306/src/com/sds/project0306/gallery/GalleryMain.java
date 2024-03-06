@@ -15,7 +15,7 @@ public class GalleryMain extends JFrame implements ActionListener{
 	JButton bt_prev, bt_next;
 	
 	public GalleryMain() {
-		can = new MyCanvas();
+		can = new MyCanvas(this);
 		p_south = new JPanel();
 		bt_prev = new JButton("◀");
 		bt_next = new JButton("▶");
