@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 public class MyCanvas extends Canvas{
+	int index; //몇번째 이미지를 접근해야 할지를 결정짓는 변수
 	
 	String[] filename= {
 		"D:\\java_workspace\\project0306\\images\\card\\h1.png",
@@ -31,10 +32,22 @@ public class MyCanvas extends Canvas{
 		}
 	}
 	
+	//이전 이미지 보여주기
+	public void prev() {
+		index--;
+		repaint();//다시 그리기		
+	}
+	
+	//다음 이미지 보여주기 
+	public void next() {
+		index++;
+		repaint();//다시 그리기
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		//프로그램 가동과 동시에 0번째 이미지가 그려지게..
-		g.drawImage(imageArray[0], 0, 0, 600,550, this);
+		g.drawImage(imageArray[index], 0, 0, 600,550, this);
 	}
 	
 }
