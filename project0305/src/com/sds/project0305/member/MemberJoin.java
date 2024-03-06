@@ -38,7 +38,7 @@ public class MemberJoin extends JFrame implements WindowListener{
 	//Checkbox를 그룹화 시켜놓아야 라디오가 등장, html 에서도  radio는 배열로 존재시켜야 함 
 	
 	Checkbox[] hobby = new Checkbox[4]; //취미
-	String[] hobbyName= {"여행","프로그래밍","운동", "동물복지"};
+	String[] hobbyName= {"Travel","Programming","exercise", "pet protection"};
 	JTextField t_profile; //프로필 사진 경로 
 	JTextField t_filename, t_ext; //파일명과 확장자 
 	JTextField t_zip1, t_zip2; //우편번호 앞,뒤자리 
@@ -88,10 +88,12 @@ public class MemberJoin extends JFrame implements WindowListener{
 		
 		//주민번호 스타일 
 		la_jumin.setPreferredSize(d);
-		Dimension d2 = new Dimension(130, 28);
+		Dimension d2 = new Dimension(145, 28);
 		t_jumin1.setPreferredSize(d2);
 		t_jumin2.setPreferredSize(d2);
 		
+		//취미 라벨 스타일
+		la_hobby.setPreferredSize(d);
 		
 		//조립
 		add(la_title, BorderLayout.NORTH); //프레임의 북쪽에 부착 
@@ -107,6 +109,11 @@ public class MemberJoin extends JFrame implements WindowListener{
 		p_content.add(t_jumin1);
 		p_content.add(t_jumin2);
 		
+		//취미를 반복문으로 부착 
+		p_content.add(la_hobby);
+		for(int i=0; i<hobby.length;i++) {
+			p_content.add(hobby[i]);
+		}
 		
 		//현재 프레임과 리스너 연결 
 		//현재프레임.addWindowListener( 리스너 구현한 者)
