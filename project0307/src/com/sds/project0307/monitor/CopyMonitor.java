@@ -33,8 +33,8 @@ public class CopyMonitor extends JFrame implements ActionListener, WindowListene
 		
 		la_ori = new JLabel("원본 경로");
 		la_dest = new JLabel("복사 경로");
-		t_ori = new JTextField("D:/java_workspace/project0307/res/winter_night.jpg");
-		t_dest = new JTextField("D:/java_workspace/project0307/res/winter_night3.jpg");
+		t_ori = new JTextField("D:/java_workspace/project0307/res/memo.txt");
+		t_dest = new JTextField("D:/java_workspace/project0307/res/memo2.txt");
 		area = new JTextArea();
 		bt = new JButton("복사실행");
 		
@@ -83,7 +83,17 @@ public class CopyMonitor extends JFrame implements ActionListener, WindowListene
 				data=fis.read(); //1 byte 읽기
 				if(data==-1)break;//루프 중단
 				fos.write(data); //1 byte 쓰기
+				
+				//area에 현재 프로그램을 거쳐가고 있는 바이트 알갱이들을 출력해보자
+				//java 의 모든 기본자료형마다 1:1 대응되는 Wrapper 클래스가 지원됨 
+				//Wrapper의 목적: 기본자료형과 객체자료형간의 형변환을 지원
+				// int형 3을 객체형인 "3" 스트링 객체로 바꾼다거나, 또는 역으로 "3" 을 int 형 3으로 바꿀때..
+				//byte : Byte, short:Short, int:Integer
+				//String str = Integer.toString(data);
+				//area.append(str);
+				System.out.print((char)data);
 			}
+			
 			JOptionPane.showMessageDialog(this, "복사완료");
 			
 		} catch (FileNotFoundException e) {
