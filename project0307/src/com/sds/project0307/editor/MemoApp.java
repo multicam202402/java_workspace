@@ -2,7 +2,12 @@ package com.sds.project0307.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -25,6 +30,10 @@ public class MemoApp extends JFrame implements ActionListener{
 	JMenuItem[] item = new JMenuItem[itemTitle.length];
 	JTextArea area;
 	JScrollPane scroll;
+	FileInputStream fis; //바이트 기반 스트림 (1byte씩 만 이해하므로 영문만 이해)
+	
+	//자바에서는 파일 탐색기를 가리켜 JFileChooser
+	JFileChooser chooser;
 	
 	public MemoApp() {
 		bar = new JMenuBar();
@@ -46,6 +55,10 @@ public class MemoApp extends JFrame implements ActionListener{
 			//메뉴 아이템들과 리스너 연결 
 			item[i].addActionListener(this);
 		}
+		
+		//파일 탐색기를 생성해놓기 
+		//생성해놓는다고 하여, 눈에 보여지는 것이 아니라, 메서드를 호출해야 창이 뜸
+		chooser = new JFileChooser("D:/java_workspace/project0307");
 		
 		//모든 메뉴를 바에 붙이자
 		bar.add(m_file);
@@ -69,14 +82,48 @@ public class MemoApp extends JFrame implements ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // 임시로..
 	}
 	
+	//파일 열기 
+	public void openFile() {
+		//문서 파일을 대상으로 빨대를 꽂아서, 들이마시자!! 
+		//파일 열기 탐색기 띄우기!!
+		int result = chooser.showOpenDialog(this); //새창은 반드시 부모컨테이너가 존재해야 뜰수있다.
+													//즉 새창은 단독으로 존재할 수 없다..
+		System.out.println("유저의 선택 "+result);
+		//result 값은 긍정 0, 취소1 인데, 이 결과를 개발자가 암기하지 말자!!
+		//왜? 자바에서는 사람에게 직관적인 데이터를 표현하기 위해 상수를 지원함 상수는 의미가 부여되어있기
+		//때문에 사람이 쓰기 편하다
+		if(result == JFileChooser.APPROVE_OPTION ) {//열기를 눌렀다면..
+			//유저가 선택한 파일이 무엇인지 파악?
+			
+			//유저가 선택한 파일의 정보를 File 클래스의 인스턴스로 반환
+			File file = chooser.getSelectedFile(); 
+			System.out.println("유저가 선택한 파일"+file);
+			
+			//얻어진 File 정보를 이용하여, 입력스트림을 메모리에 올리자(즉 빨대 꽂자) 
+			try {
+				fis = new FileInputStream(file);//파일객체를 이용한 스트림
+				
+				//파일 스트림을 이용하여 바이트 단위로 마구 마구 읽어서 area 에 출력
+				int data=-1;
+				
+				data = fis.read(); //1byte 읽어들임
+				area.append(""+(char)data); //문서 파일의 데이터를 읽었으므로, char 형으로 변환가능
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
 	public void actionPerformed(ActionEvent e) {
-		/*
-		 * 이벤트를 일으킨 컴포넌트를 이벤트 소스(source)라 한다. e객체로부터 이벤트 소스를 얻자 
-		 * */
+		/*이벤트를 일으킨 컴포넌트를 이벤트 소스(source)라 한다. e객체로부터 이벤트 소스를 얻자*/
 		Object obj = e.getSource();
 		
 		if(obj == item[2]) {
-			System.out.println(e);			
+			openFile();			
 		}
 		
 	}
