@@ -1,5 +1,8 @@
 package com.sds.project0307.editor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -8,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 //메모장 편집기를 만들어보자
-public class MemoApp extends JFrame{
+public class MemoApp extends JFrame implements ActionListener{
 	JMenuBar bar; //메뉴들을 올려놓을 막대기
 	
 	JMenu m_file; //파일 
@@ -39,6 +42,9 @@ public class MemoApp extends JFrame{
 			if(i==4 || i==6) {
 				m_file.addSeparator();//구분선
 			}
+			
+			//메뉴 아이템들과 리스너 연결 
+			item[i].addActionListener(this);
 		}
 		
 		//모든 메뉴를 바에 붙이자
@@ -61,6 +67,18 @@ public class MemoApp extends JFrame{
 		setSize(900,800);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // 임시로..
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		/*
+		 * 이벤트를 일으킨 컴포넌트를 이벤트 소스(source)라 한다. e객체로부터 이벤트 소스를 얻자 
+		 * */
+		Object obj = e.getSource();
+		
+		if(obj == item[2]) {
+			System.out.println(e);			
+		}
+		
 	}
 	
 	public static void main(String[] args) {
