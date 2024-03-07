@@ -1,6 +1,7 @@
 package com.sds.project0307.monitor;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,8 +29,8 @@ public class CopyMonitor extends JFrame{
 		
 		//스타일 
 		Dimension d1 = new Dimension(150, 35);//JLabel 꺼
-		Dimension d2 = new Dimension(630, 35); //JTextField 꺼
-		Dimension d3 = new Dimension(780, 450); //JTextArea 꺼
+		Dimension d2 = new Dimension(620, 35); //JTextField 꺼
+		Dimension d3 = new Dimension(750, 350); //JTextArea 꺼
 		
 		la_ori.setPreferredSize(d1);
 		la_dest.setPreferredSize(d1);
@@ -38,8 +39,19 @@ public class CopyMonitor extends JFrame{
 		area.setPreferredSize(d3);
 		
 		//조립 
+		setLayout(new FlowLayout());
 		
+		add(la_ori);
+		add(t_ori);
+		add(la_dest);
+		add(t_dest);
+		add(area);
+		add(bt);
 		
+		//윈도우 설정 
+		setSize(800,600);
+		setVisible(true);
+		setLocationRelativeTo(null);
 	}
 	
 	public static void main(String[] args) {
