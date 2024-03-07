@@ -1,5 +1,7 @@
 package com.sds.project0307.copy;
 
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +21,15 @@ public class GUICopy extends JFrame{
 		
 		bt = new JButton("복사 실행");
 		
+		//스타일 
+		Dimension d1 = new Dimension(180, 35);
+		Dimension d2 = new Dimension(500, 35);
+		
+		la_ori.setPreferredSize(d1);
+		la_dest.setPreferredSize(d1);
+		
+		t_ori.setPreferredSize(d2);
+		t_dest.setPreferredSize(d2);
 		
 	}
 	
