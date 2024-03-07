@@ -1,5 +1,6 @@
 package com.sds.project0307.editor;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -72,12 +73,13 @@ public class MemoApp extends JFrame implements ActionListener{
 		
 		//스크롤을 적용하고  싶은 컴포넌트를 생성자의 인스로 넣어줘야 함 
 		scroll = new JScrollPane(area=new JTextArea());
+		area.setFont(new Font("Verdana", Font.BOLD, 25)); //area의 폰트 크기 조정 
 		
 		//조립 
 		add(scroll);
 		
 		//윈도우 설정 
-		setSize(900,800);
+		setSize(1400,800);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // 임시로..
 	}
@@ -106,8 +108,11 @@ public class MemoApp extends JFrame implements ActionListener{
 				//파일 스트림을 이용하여 바이트 단위로 마구 마구 읽어서 area 에 출력
 				int data=-1;
 				
-				data = fis.read(); //1byte 읽어들임
-				area.append(""+(char)data); //문서 파일의 데이터를 읽었으므로, char 형으로 변환가능
+				while(true) {
+					data = fis.read(); //1byte 읽어들임
+					if(data==-1)break; //파일의 끝에 도달하면 루프 종료
+					area.append(""+(char)data); //문서 파일의 데이터를 읽었으므로, char 형으로 변환가능
+				}
 				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
