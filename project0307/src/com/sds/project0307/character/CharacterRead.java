@@ -58,6 +58,22 @@ public class CharacterRead {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			if(buffr != null) {
+				try {
+					buffr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 		
 	}
