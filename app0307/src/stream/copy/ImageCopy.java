@@ -60,10 +60,10 @@ public class ImageCopy {
 					break;//현재 진행중인 루프를 빠져나오는 명령
 				};//파일의 끝에 도달하면 현재 루프를 빠져나오기
 				
-				System.out.print((char)data);
+				//System.out.print((char)data);
 
 				//읽어들인 바이트 데이터를 출력 대상이 되는 파일에 내려쓰자
-
+				fos.write(data); //1 byte 내려쓰기
 			}
 		}catch(FileNotFoundException e){
 			System.out.println("파일의 경로를 확인해주세요");
