@@ -9,16 +9,69 @@ package stream.copy;
 	- Output(출력) : 실행중인 프로그램에서 데이터가 나가는 모습 
 */
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;//파일없으면 어떡할래 예외
+import java.io.IOException; //읽거나 쓸때 발생이 예상되는 예외
 
 public class ImageCopy {
 	FileInputStream fis; //파일을 대상으로 한 입력스트림 객체 
 						//이 클래스를 이용하면 실행중인 자바 프로그램으로 파일을 이루고 
 						//있는 바이트 데이터들을 읽어 마실 수 있다
-	String filename="D:/java_workspace/app0307/res/chicken.webp	";
+	FileOutputStream fos;//파일을 대상으로 한 출력스트림 객체 
+									//이 클래스를 이용하면, 실행중인 자바 프로그램에서 지정한 파일로
+									//바이트 데이터를 출력할 수 있다(쓰기)
+
+	//String filename="D:/java_workspace/app0307/res/chicken.webp";
+	String filename="D:/java_workspace/app0307/res/fruit.txt";
+	String destname="D:/java_workspace/app0307/res/fruit_copy.txt";
 
 	public ImageCopy(){
-		fis = new FileInputStream(filename);			
+		/*
+		문법적으로 문제가 없다 하여, 언제나 안전한 실행을 보장하는 게 아니다. 
+		프로그램의 정상 수행을 방해하는 요인을 예외(Exception)라 한다.
+
+		프로그램의 정상 수행을 방해하는 요인은 크게 2가지가 있다.
+		1) 에러 : 사람인 개발자가 감당할 수 없는 경우(예) 전기나감, cpu타버림, 네트워크 끊음)
+					이러한 에러들은 프로그램의 관심 대상이 X
+		2) 예외 : 프로그래머가 복구할순 없지만, 프로그램의 비정상적 흐름을 정상 흐름으로 돌려놓을 수 있슴
+		*/
+		
+
+		//비정상 수행이 예상되는 코드에 try문으로 감싼 후, 우려가 되었던 상황이 발생하면 
+		//프로그램의 비정상 수행을 방치하는 것이 아니라, catch문으로 실행부를 진입시켜 
+		//알맞는 처리를 할수있도록 지원하는 기술이 예외처리이다.
+		try{
+			fis = new FileInputStream(filename);//파일에 대해 빨대 꽂기	
+
+			//주의) 파일출력스트림은 객체 인스턴스 생성 시, 빈(empty) 파일을 자동으로 생성해 버린다
+			fos = new FileOutputStream(destname);
+
+			System.out.println("파일에 대한 입력스트림 성공");
+			//우려했던 상황이 발생하면, jvm이 해당 예외에 대한 정보를 객체 인스턴스로 생성하여 
+			//아래의 catch 문의 매개변수로 전달해준다..이때 개발자는 이 객체를 이용하여 적절한 
+			//예외 처리를 수행하면 된다..
+			//아주 중대하다고 판단되는 예외 상황은 sun 이미 결정해 놓았으므로, 개발자는 컴파일시
+			//컴파일러의 안내에 따라 적절한 예외 처리를 하면 된다.
+			int data=-1;
+
+			while(true){
+				data = fis.read(); //1byte 읽기
+				if(data==-1){
+					break;//현재 진행중인 루프를 빠져나오는 명령
+				};//파일의 끝에 도달하면 현재 루프를 빠져나오기
+				
+				System.out.print((char)data);
+
+				//읽어들인 바이트 데이터를 출력 대상이 되는 파일에 내려쓰자
+
+			}
+		}catch(FileNotFoundException e){
+			System.out.println("파일의 경로를 확인해주세요");
+		}catch(IOException e){
+			System.out.println("데이터 읽거나 쓰기에 실패");
+		}
 	}
+
 	public static void main(String[] args) {
 		new ImageCopy();
 	}
