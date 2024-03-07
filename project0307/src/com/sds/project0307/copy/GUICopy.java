@@ -1,6 +1,7 @@
 package com.sds.project0307.copy;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +24,7 @@ public class GUICopy extends JFrame{
 		
 		//스타일 
 		Dimension d1 = new Dimension(180, 35);
-		Dimension d2 = new Dimension(500, 35);
+		Dimension d2 = new Dimension(480, 35);
 		
 		la_ori.setPreferredSize(d1);
 		la_dest.setPreferredSize(d1);
@@ -31,11 +32,23 @@ public class GUICopy extends JFrame{
 		t_ori.setPreferredSize(d2);
 		t_dest.setPreferredSize(d2);
 		
+		//조립
+		this.setLayout(new FlowLayout());
+		add(la_ori);
+		add(t_ori);
+		add(la_dest);
+		add(t_dest);
+		add(bt);
+		
+		//윈도우 설정 
+		setSize(700, 200);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);//x자 누르면 프로세스 종료
 	}
 	
 	public static void main(String[] args) {
 		new GUICopy();
-
 	}
 
 }
