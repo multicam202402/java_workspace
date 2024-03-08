@@ -55,7 +55,13 @@ public class Multibar extends JFrame{
 	//그리고 step값도 각각 틀리게 배분 후 
 	//해당 쓰레드를 start()
 	public void startDownload() {
+		BarThread t1 = new BarThread(bars[0],3);
+		BarThread t2 = new BarThread(bars[1],1);
+		BarThread t3 = new BarThread(bars[2],5);
 		
+		t1.start();
+		t2.start();
+		t3.start();
 	}
 	
 	public static void main(String[] args) {

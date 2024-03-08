@@ -10,6 +10,11 @@ public class BarThread extends Thread{
 	int n;
 	boolean flag=true;
 	
+	public BarThread(JProgressBar bar, int step ) {
+		this.bar =bar;
+		this.step=step;
+	}
+	
 	public void download() {
 		n += step;
 		bar.setValue(n);
