@@ -1,5 +1,6 @@
 package com.sds.project0308.sprite;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -41,6 +42,13 @@ public class MyPanel extends JPanel{
 	}
 
 	public void paint(Graphics g) {
+		
+		g.setColor(Color.YELLOW);//그림에 사용될 페인트 색상  노란색으로..
+		g.fillRect(0, 0, 500, 400);//채워진 사각형을 그리기
+		
 		g.drawImage(imgArray[index], 50, 50, 200, 213, this);
 	}
 }
+
+
+

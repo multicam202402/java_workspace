@@ -36,7 +36,10 @@ public class Animation extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		move();
+		//자동으로  move() 를 호출해야 하므로, 
+		//쓰레드에게 move() 호출을 맡기자!!
+		MyThread mt = new MyThread(this);
+		mt.start(); //runnable로 밀어넣기
 	}
 	
 	public static void main(String[] args) {
