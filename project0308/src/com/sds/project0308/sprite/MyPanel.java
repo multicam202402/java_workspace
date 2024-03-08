@@ -32,6 +32,7 @@ public class MyPanel extends JPanel{
 	};
 	
 	Image[] imgArray=new Image[path.length];//이미지가 들어갈 공간 확보 
+	int index=0; //어떤 이미지를 보여줄지를 결정짓는 배열의 index
 	
 	public MyPanel() {
 		for(int i=0;i<imgArray.length;i++) {
@@ -40,6 +41,6 @@ public class MyPanel extends JPanel{
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(imgArray[0], 200, 150, 200, 213, this);
+		g.drawImage(imgArray[index], 50, 50, 200, 213, this);
 	}
 }
