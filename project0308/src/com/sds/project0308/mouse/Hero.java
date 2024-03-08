@@ -14,7 +14,7 @@ public class Hero{
 	int height;
 	int velX;
 	int velY;
-	int a; //비율계수 
+	float a=0.1f; //비율계수 
 	int targetX; //목표지점
 	
 	public Hero(String path, int x, int y, int width, int height, int velX, int velY) {
@@ -33,6 +33,13 @@ public class Hero{
 		this.x +=this.velX;
 		this.y +=this.velY;
 	}
+	
+	//목표지점까지 감속도 운동 
+	//나의 위치 = 현나위치 + 비율계수*(목표지점 - 현나위치)
+	public void softTick() {
+		//this.x = this.x + a*(targetX - this.x);
+	}
+	
 	
 	//화면에 그리기 
 	//GamePanel 에서 모든 그래픽 처리가 
