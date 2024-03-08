@@ -1,7 +1,9 @@
 package com.sds.project0308.keyboard;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /*
  * 지금까지는 파일을 대상으로 해서, 스트림을 제어했다면, 
@@ -24,16 +26,24 @@ public class KeyboardStream {
 		//os 차원에서 얻어놓은 입력 스트림은 표준을 따르기 때문에 자바 언어가 별도의 하드웨어를 인식
 		//할필요도 없이 그냥 모든 디바이스에 대한 스트림은 InputStream으로 연결만 하면 된다..
 		
+		//문자 기반의 입력스트림
+		InputStreamReader reader=new InputStreamReader(is); //빨대 업그레이드(문자본다)
+		BufferedReader buffr=new BufferedReader(reader); //3단계 빨대
 		
-		int data=-1;
+		//int data=-1;
+		String msg=null; //문자열 한 줄을 담을 변수
 
 		try {
-			data = is.read();//키보드로 부터 1 byte 읽기
-									//데이터를 읽기 전까지는 대기 상태에 빠진다
+			int count=0; //횟수를 체크해보기 위한 변수
 			
-			//출력하자 
-			System.out.print(data);
-			
+			while(true) {
+				//data = reader.read();//키보드로 부터 1 문자 읽기
+										//데이터를 읽기 전까지는 대기 상태에 빠진다
+				msg=buffr.readLine(); //줄바꿈(\n) 문자를 만날때까지 문자들을 모아서, 문자열 생성하여 읽음 
+				count++;
+				//출력하자 
+				System.out.print(msg+" , "+count);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
