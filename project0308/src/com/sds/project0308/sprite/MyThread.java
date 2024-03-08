@@ -15,7 +15,7 @@ public class MyThread extends Thread{
 		while(true) {
 			//Animation 클래스가 보유한 move() 메서드 호출
 			try {
-				Thread.sleep(300);
+				Thread.sleep(30);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

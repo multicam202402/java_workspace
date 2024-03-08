@@ -32,6 +32,11 @@ public class Animation extends JFrame implements ActionListener{
 	public void move() {
 		//MyPanel 보유한 index 변수의 값을 증가시킨 후 다시 그리게 하자!! 
 		p_content.index++;
+		
+		if(p_content.index>= p_content.imgArray.length) {
+			p_content.index=0;
+		}
+		
 		p_content.repaint();//다시 그리기 요청
 	}
 	
