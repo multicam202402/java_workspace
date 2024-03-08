@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -33,9 +34,13 @@ public class MemoApp extends JFrame implements ActionListener {
 	JMenuItem[] item = new JMenuItem[itemTitle.length];
 	JTextArea area;
 	JScrollPane scroll;
+	
+	File file; //지금 열어놓은 파일
 	FileInputStream fis; // 바이트 기반 스트림 (1byte씩 만 이해하므로 영문만 이해)
 	InputStreamReader reader;
 	BufferedReader buffr;
+	
+	FileWriter fw; //문자기반의 출력스트림 
 
 	// 자바에서는 파일 탐색기를 가리켜 JFileChooser
 	JFileChooser chooser;
@@ -102,7 +107,7 @@ public class MemoApp extends JFrame implements ActionListener {
 			// 유저가 선택한 파일이 무엇인지 파악?
 
 			// 유저가 선택한 파일의 정보를 File 클래스의 인스턴스로 반환
-			File file = chooser.getSelectedFile();
+			file = chooser.getSelectedFile();
 			System.out.println("유저가 선택한 파일" + file);
 
 			// 얻어진 File 정보를 이용하여, 입력스트림을 메모리에 올리자(즉 빨대 꽂자)
@@ -156,12 +161,35 @@ public class MemoApp extends JFrame implements ActionListener {
 		}
 	}
 
+	//파일저장 
+	public void saveFile() {
+		//열어놓은파일을 대상으로 출력스트림 꽂자!!
+		try {
+			fw = new FileWriter(file);
+			fw.write(area.getText());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fw !=null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		/* 이벤트를 일으킨 컴포넌트를 이벤트 소스(source)라 한다. e객체로부터 이벤트 소스를 얻자 */
 		Object obj = e.getSource();
 
-		if (obj == item[2]) {
+		if (obj == item[2]) { //누른 버튼이 열기 버튼이었다면
 			openFile();
+		}else if(obj == item[3]) { //누른 버튼이 저장 버튼이었다면
+			saveFile();
+		}else if(obj == item[7]) { //누른 버튼이 끝내기 버튼이었다면
+			System.exit(0);
 		}
 
 	}
