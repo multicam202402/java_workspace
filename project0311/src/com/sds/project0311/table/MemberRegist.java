@@ -3,6 +3,8 @@ package com.sds.project0311.table;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,12 @@ public class MemberRegist extends JFrame{
 	JTextField t_gender; //성별 
 	JButton bt;//등록 버튼 
 	
+	//데이터가 되는 이차원 배열 
+	String[][] data={
+		{"SCOTT","010","남"}
+	};
+	String[] column= {"아이디","연락처","성별"};
+	
 	JTable table;
 	JScrollPane scroll;
 	
@@ -28,7 +36,7 @@ public class MemberRegist extends JFrame{
 		t_phone = new JTextField();
 		t_gender = new JTextField();
 		
-		table = new JTable();
+		table = new JTable(data, column);
 		scroll = new JScrollPane(table);
 		bt = new JButton("등록");
 		
@@ -49,6 +57,15 @@ public class MemberRegist extends JFrame{
 		p_west.add(bt);
 		
 		add(p_west, BorderLayout.WEST);//패널을 서쪽에 부착 
+		add(scroll); //센터에 스크롤 부착(테이블 포함된)
+		
+		//버튼과 리스너 연결 
+		bt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("나 눌렀어?");
+			}
+		});
+		
 		
 		//윈도우 설정 
 		setSize(500,400);
