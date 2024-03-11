@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /*
@@ -11,6 +12,7 @@ import javax.swing.JTable;
  * */
 public class TableTest extends JFrame{
 	JTable table;
+	JScrollPane scroll; 
 	
 	//3층의 4호수짜리 데이터
 	String[][] data = {
@@ -23,12 +25,13 @@ public class TableTest extends JFrame{
 	
 	public TableTest() {
 		table=  new JTable(data, cols); //5층 4호수
+		scroll = new JScrollPane(table); //테이블에 스크롤 적용 
 		
 		//스타일 
-		table.setPreferredSize(new Dimension(500, 400));
+		//table.setPreferredSize(new Dimension(500, 400));
 		
-		setLayout(new FlowLayout());
-		add(table);
+		//setLayout(new FlowLayout());
+		add(scroll);
 		
 		setVisible(true);
 		setSize(500,400);
