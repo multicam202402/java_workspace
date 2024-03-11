@@ -21,7 +21,8 @@ public class MemberRegist extends JFrame{
 	JTextField t_gender; //성별 
 	JButton bt;//등록 버튼 
 	
-	FruitModel model=new FruitModel(); //JTable 이 보여줄 데이터에 대한 정보를 제공하는 자
+	//FruitModel model=new FruitModel(); //JTable 이 보여줄 데이터에 대한 정보를 제공하는 자
+	MyTableModel model = new MyTableModel();
 	JTable table;
 	JScrollPane scroll;
 	
@@ -78,11 +79,21 @@ public class MemberRegist extends JFrame{
 	//회원 추가하기
 	public void regist() {
 		/* 배열은 처음에 생성 시 그 크기를 정해놓으면, 수정이 불가하다 
-		 * 따라서 기존의 data 변수가 가리키고 있던 배열은 버리고 새로운 배열을 생성하여 data에 대입해보자*/
-		String[][] row = {
-			{"SCOTT","010","남"},
-			{"ADAMS","017","남"}
+		 * 따라서 기존의 data 변수가 가리키고 있던 배열은 버리고 새로운 배열을 생성하여 data에 대입해보자
+		 * */
+		
+		//일차원 배열을 생성하여, ArrayList에 새로운 멤버 추가하기 
+		String[] member = {
+			t_id.getText(), 
+			t_phone.getText(), 
+			t_gender.getText()
 		};
+		
+		model.list.add( member);
+		System.out.println("현재 누적된 사원수는 "+model.list.size());
+		
+		//jtable 에 데이터 갱신 
+		table.updateUI();
 	}
 	
 	public static void main(String[] args) {
