@@ -21,12 +21,7 @@ public class MemberRegist extends JFrame{
 	JTextField t_gender; //성별 
 	JButton bt;//등록 버튼 
 	
-	//데이터가 되는 이차원 배열 
-	String[][] data={
-		{"SCOTT","010","남"}
-	};
-	String[] column= {"아이디","연락처","성별"};
-	
+	FruitModel model=new FruitModel(); //JTable 이 보여줄 데이터에 대한 정보를 제공하는 자
 	JTable table;
 	JScrollPane scroll;
 	
@@ -36,7 +31,14 @@ public class MemberRegist extends JFrame{
 		t_phone = new JTextField();
 		t_gender = new JTextField();
 		
-		table = new JTable(data, column);
+		//JTable의 3번째 생성자 방법인 즉 생성자에 이차원배열을 대입하는 방식은, 
+		//Table이 보여줄 데이터를 고정하기 때문에, 데이터를 변경한다거나 교체가 불가능함 
+		//유지보수성 또 떨어짐 , 예를 들어 과일을 보여주고 싶다면 과일용  JTable 이차원배열을 또 만들어야 함
+		//따라서 4번째 생성자를 이용해본다. TableModel 을 이용하면 디자인인(View) JTable과 
+		// 그 안에 보여질 데이터(Model)을 분리시켜 개발할 수 있으므로, 추후 다른 종류의 데이터를 보여
+		//주어야 한다고 해도, 코드가 크게 바뀔것이 없다.  특히 기존의 JTable 관련 코드 유지가능.. 
+		//즉 순수 데이터인 이차원 배열만 바꾸면 된다..
+		table = new JTable(model);
 		scroll = new JScrollPane(table);
 		bt = new JButton("등록");
 		
@@ -62,15 +64,25 @@ public class MemberRegist extends JFrame{
 		//버튼과 리스너 연결 
 		bt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("나 눌렀어?");
+				//System.out.println("나 눌렀어?");
+				regist();
 			}
 		});
-		
 		
 		//윈도우 설정 
 		setSize(500,400);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	//회원 추가하기
+	public void regist() {
+		/* 배열은 처음에 생성 시 그 크기를 정해놓으면, 수정이 불가하다 
+		 * 따라서 기존의 data 변수가 가리키고 있던 배열은 버리고 새로운 배열을 생성하여 data에 대입해보자*/
+		String[][] row = {
+			{"SCOTT","010","남"},
+			{"ADAMS","017","남"}
+		};
 	}
 	
 	public static void main(String[] args) {
