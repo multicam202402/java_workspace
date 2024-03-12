@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -76,6 +78,26 @@ public class CarInsert extends JFrame{
 			}
 		});
 		
+		//현재 창에 윈도우 리스너 연결 
+		this.addWindowListener(new WindowAdapter() {
+			//우리 대신 이벤트 관련 Listener를 구현한 객체들을 가리켜 어댑터라 한다..
+			//어댑터는 인터페이스의 추상메서드들을 재정의해놓았으므로, 우리가 그중 원하는 것만 
+			//오버라이드하여 사용하면 된다
+			public void windowClosing(WindowEvent e) {
+				//데이터베이스 접속 끊기!!
+				if(con !=null) {
+					try {
+						con.close();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				System.exit(0);//현재 프로세스도 종료
+			}
+		});
+		
+		
 		setSize(400,250);
 		setVisible(true);		
 	}
@@ -133,12 +155,21 @@ public class CarInsert extends JFrame{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 		
+		} finally {
+			if(pstmt !=null) {   //PreparedStatement 객체는 쿼리문 1개당 1:1 대응하면 쿼리 수행후 닫아버린다
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}		
 	}
 	
 	public static void main(String[] args) {
 		new CarInsert();
 
 	}
+
 
 }
