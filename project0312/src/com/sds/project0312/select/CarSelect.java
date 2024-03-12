@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,15 +22,16 @@ public class CarSelect extends JFrame{
 	JTable table;
 	JScrollPane scroll;
 	
-	String driver="com.mysql.jdbc.Driver";
-	String url="jdbc:mysql://localhost:3306/javase";
-	String user="root";
-	String pass;
+//	String driver="com.mysql.jdbc.Driver";
+//	String url="jdbc:mysql://localhost:3306/javase";
+//	String user="root";
+//	String pass;
 	
-//	String driver="oracle.jdbc.driver.OracleDriver";
-//	String url="jdbc:oracle:thin:@localhost:1521:XE";
-//	String user="batman";
-//	String pass="1234";
+	String driver="oracle.jdbc.driver.OracleDriver";
+	String url="jdbc:oracle:thin:@localhost:1521:XE";
+	String user="batman";
+	String pass="1234";
+	Connection con=null;
 	
 	public CarSelect() {
 		bt_connect = new JButton("접속");
@@ -64,8 +68,30 @@ public class CarSelect extends JFrame{
 		setVisible(true);
 	}
 	
+	
 	public void connect() {
+		//1단계: 드라이버 로드
+		try {
+			Class.forName(driver);
+			this.setTitle("드라이버 로드 성공");
+			
+			//2단계: 접속
+			con = DriverManager.getConnection(url, user, pass);
+			
+			if(con ==null) {
+				this.setTitle("접속 실패");
+			}else {
+				this.setTitle("접속 성공");
+			}			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			this.setTitle("드라이버 로드 실패");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		//3단계: 쿼리문 수행 
+		//4단계: 자원해제
 	}
 	
 	public static void main(String[] args) {
