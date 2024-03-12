@@ -1,5 +1,7 @@
 package com.sds.project0312.select;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 /*
@@ -10,14 +12,16 @@ import javax.swing.table.AbstractTableModel;
  *  JTable (View)   -- Controller (TableModel)   -- 데이터,ArrayList() 모델영역
  */
 public class MyTableModel extends AbstractTableModel{
-
+	
+	ArrayList<String[]> list = new ArrayList<String[]>(); //size 0인 비어있는 리스트생성
+	
 	String[] column = {"car_idx","name","price"};
 	
 	//TableModel 객체가 제공해주는 모든 메서드는 결국 View 단인 JTable을 위한 메서드들이다.. 
 	
 	public int getRowCount() { //몇행인지...반환
 		// TODO Auto-generated method stub
-		return 5;
+		return list.size();
 	}
 	@Override
 	public int getColumnCount() { //몇열인지...반환
@@ -31,9 +35,9 @@ public class MyTableModel extends AbstractTableModel{
 	}
 	
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) { //각 행,열에 무엇을 넣어야 하는지 반환
-		// TODO Auto-generated method stub
-		return "apple";
+	public Object getValueAt(int row, int col) { //각 행,열에 무엇을 넣어야 하는지 반환
+		String[] data = list.get(row);
+		return data[col];
 	}
 	
 }
