@@ -1,6 +1,8 @@
 package com.sds.project0312.select;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,6 +19,16 @@ public class CarSelect extends JFrame{
 	JTable table;
 	JScrollPane scroll;
 	
+	String driver="com.mysql.jdbc.Driver";
+	String url="jdbc:mysql://localhost:3306/javase";
+	String user="root";
+	String pass;
+	
+//	String driver="oracle.jdbc.driver.OracleDriver";
+//	String url="jdbc:oracle:thin:@localhost:1521:XE";
+//	String user="batman";
+//	String pass="1234";
+	
 	public CarSelect() {
 		bt_connect = new JButton("접속");
 		bt_select = new JButton("가져오기");
@@ -32,6 +44,13 @@ public class CarSelect extends JFrame{
 		//센터부착 
 		add(scroll);
 		
+		//접속버튼과 리스너 연결
+		bt_connect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				connect();
+			}
+		});
+		
 		//현재 프레임에 윈도우 리스너 연결
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -43,6 +62,10 @@ public class CarSelect extends JFrame{
 		
 		setSize(600,400);
 		setVisible(true);
+	}
+	
+	public void connect() {
+		
 	}
 	
 	public static void main(String[] args) {
