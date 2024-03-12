@@ -34,15 +34,15 @@ public class CarInsert extends JFrame{
 	
 	//db 정보는 절대로 노출되어서는 안됌
 	
-//	String driver="oracle.jdbc.driver.OracleDriver";
-//	String url="jdbc:oracle:thin:@localhost:1521:XE";
-//	String user="batman";
-//	String pass="1234";
+	String driver="oracle.jdbc.driver.OracleDriver";
+	String url="jdbc:oracle:thin:@localhost:1521:XE";
+	String user="batman";
+	String pass="1234";
 	
-	String driver="com.mysql.jdbc.Driver";
-	String url="jdbc:mysql://localhost:3306/javase";
-	String user="root";
-	String pass="";
+//	String driver="com.mysql.jdbc.Driver";
+//	String url="jdbc:mysql://localhost:3306/javase";
+//	String user="root";
+//	String pass="";
 	
 	Connection con=null; //접속이 성공된 이후에 접속 정보를 가진 객체
 	
@@ -131,12 +131,12 @@ public class CarInsert extends JFrame{
 		PreparedStatement pstmt=null; //쿼리문 담당 객체 
 		
 		//Oracle
-		//String sql="insert into car(car_idx, name, price)"; 
-		//sql+=" values(seq_car.nextval,'"+t_name.getText()+"', "+t_price.getText()+")";
+		String sql="insert into car(car_idx, name, price)"; 
+		sql+=" values(seq_car.nextval,'"+t_name.getText()+"', "+t_price.getText()+")";
 		
 		//MySQL
-		String sql="insert into car(name, price)";
-		sql+=" values('"+t_name.getText()+"', "+t_price.getText()+")";
+		//String sql="insert into car(name, price)";
+		//sql+=" values('"+t_name.getText()+"', "+t_price.getText()+")";
 		
 		try {
 			//쿼리문 수행하기
