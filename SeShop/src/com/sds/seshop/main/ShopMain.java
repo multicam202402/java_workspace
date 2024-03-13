@@ -1,8 +1,11 @@
 package com.sds.seshop.main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
@@ -16,9 +19,10 @@ import javax.swing.JPanel;
 public class ShopMain extends JFrame{
 	JPanel p_north;
 	JButton bt_regist, bt_list, bt_admin, bt_join, bt_login;
-	JPanel p_center; //페이지들이 교체될 컨테이너(상품등록페이지, 상품목록, 관리자명단, 로그인폼)
 	String[] iconArray= {"product.png","list.png","admin.png","join.png","login.png"};
 	JButton[] btn=new JButton[iconArray.length]; //5개짜리 빈 공간(버튼만 담을 수 있는...)
+	
+	JPanel p_center; //페이지들이 교체될 컨테이너(상품등록페이지, 상품목록, 관리자명단, 로그인폼)
 	
 	public ShopMain() {
 		p_north = new JPanel();
@@ -34,8 +38,13 @@ public class ShopMain extends JFrame{
 			p_north.add(btn[i]);
 		}
 		
+		//센터 프레임 생성 
+		p_center = new JPanel();
+		p_center.setBackground(Color.YELLOW);
+		
 		//프레임에 부착 
 		add(p_north, BorderLayout.NORTH);
+		add(p_center); //BorderLayout의 CENTER에 부착 
 		
 		//윈도우 어댑터를 익명으로 연결 (어댑터란 우리 대신 리스너를 구현한 객체 즉 어댑터가 바로 리스너임) 
 		addWindowListener(new WindowAdapter() {
@@ -44,6 +53,14 @@ public class ShopMain extends JFrame{
 				System.exit(0);//실행중인 프로그램을 프로세스..프로세스 종료
 			}
 		});
+		
+		//상품 등록 버튼에 리스너 연결 
+		btn[0].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		
 		setSize(1000,850);
 		setVisible(true);
