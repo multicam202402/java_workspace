@@ -65,7 +65,7 @@ public class ShopMain extends JFrame{
 		pages[0] = new ProductRegist();
 		pages[1] = new ProductList();
 		pages[2] = new AdminList();
-		pages[3] = new AdminRegist();
+		pages[3] = new AdminRegist(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
 		pages[4] = new Login(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
 		
 		//5페이지 중 누구를 보여줄지를 생성시점에 결정하자 

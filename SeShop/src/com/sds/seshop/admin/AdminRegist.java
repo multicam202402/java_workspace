@@ -2,6 +2,8 @@ package com.sds.seshop.admin;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.sds.seshop.main.Page;
+import com.sds.seshop.main.ShopMain;
 
 //상품 등록 페이지 
 public class AdminRegist extends Page{
@@ -22,10 +25,10 @@ public class AdminRegist extends Page{
 	JPanel p_preview; //사진 미리보기 
 	JButton bt_regist, bt_login;
 	
-	
 	//1000 x 800 페이지 정의
-	public AdminRegist() {
+	public AdminRegist(ShopMain shopMain) {
 		super(Color.CYAN);
+		this.shopMain =shopMain;
 		
 		container = new JPanel();
 		
@@ -76,6 +79,15 @@ public class AdminRegist extends Page{
 		container.add(bt_login);	
 		
 		add(container);
+		
+		//가입 버튼에 리스너 연결 
+		
+		//로그인 버튼에 리스너 연결
+		bt_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				shopMain.showHide(4);
+			}
+		});
 	}
 }
 

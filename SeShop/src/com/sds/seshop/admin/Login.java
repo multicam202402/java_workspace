@@ -21,7 +21,7 @@ public class Login extends Page{
 	JTextField t_id;
 	JPasswordField t_pass;
 	JButton bt_login, bt_regist;
-	ShopMain shopMain; //null
+	
 	
 	
 	public Login(ShopMain shopMain) {
