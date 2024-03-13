@@ -7,6 +7,10 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -139,6 +143,7 @@ public class AdminRegist extends Page{
 	//프로필 파일 열어서 이미지를 패널에 그리기
 	public void preview() {
 		int result = chooser.showOpenDialog(this);
+		
 		if(result == JFileChooser.APPROVE_OPTION) { //열기 눌르면..
 			//유저가 선택한 파일 알아맞추고, 그 이미지 파일을 이용하여 p_preview 패널에  그림을 그려보자
 			File file = chooser.getSelectedFile(); //유저가 선택한 파일!!
@@ -150,6 +155,56 @@ public class AdminRegist extends Page{
 			String ext = FileManager.getExt(filename); //jpg
 			
 			//유일한 파일명으로 사용할 날짜 얻기 
+			long time = System.currentTimeMillis(); //밀리세턴드까지의 시간 얻기 
+			
+			String myName = time+"."+ext;//파일명 조합
+			System.out.println(myName);
+			
+			//원본 파일인 filename 과 연관된 입력스트림 연결하고, 바이트 데이터를 읽어서 마시면서 
+			//동시에 빈파일(empty) 새로운 이름의 파일에 내려쓰자(출력)!!  = 파일복사 
+			FileInputStream fis=null; //파일을 대상으로 한 바이트 기반의 입력 스트림 
+			FileOutputStream fos=null; //파일을 대상으로 한 바이트 기반의 출력 스트림
+			
+			try {
+				fis = new FileInputStream(file);//유저가 선택한 파일에 입력 스트림 꽂기
+				//출력스트림으로 복사할 대상..
+				fos = new FileOutputStream("C:/Users/zino1/SeShop/"+myName);
+				System.out.println("스트림 생성 성공");
+				
+				//입력스트림으로부터 1byte씩 읽고, 다시 출력스트림으로 1byte씩 내려 쓰자 
+				int data=-1;
+				
+				while(true) {
+					data = fis.read(); //1byte 읽고 변수에 담기, 파일의 끝에 다다르면 -1을 반환..
+					if(data==-1)break;//파일에 끝에 다다르면 루프 중단
+					fos.write(data);
+				}
+				
+				JOptionPane.showMessageDialog(this, "파일이 지정한 경로에 복사되었습니다");
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				System.out.println("스트림 생성 실패");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally {
+				if(fos!=null) {
+					try {
+						fos.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if(fis!=null) {
+					try {
+						fis.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
 			
 		
 			ImageIcon icon = new ImageIcon(filename);
