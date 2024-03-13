@@ -11,6 +11,6 @@ public class Page extends JPanel{
 	//나를 호출하는 자식은 나의 생성자 호출 시, Color의 인스턴스도 넘겨라!!  super(Color.RED) 호출해야함
 	public Page(Color color) {
 		this.setBackground(color);
-		this.setPreferredSize(new Dimension(1000, 800));		
+		this.setPreferredSize(new Dimension(600, 200));		
 	}
 }
