@@ -3,13 +3,12 @@ package com.sds.seshop.product;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.JPanel;
+import com.sds.seshop.main.Page;
 
 //상품 목록 페이지 
-public class ProductList extends JPanel{
+public class ProductList extends Page{
 	//1000 x 800 페이지 정의
 	public ProductList() {
-		this.setBackground(Color.RED);
-		this.setPreferredSize(new Dimension(1000, 800));
+		super(Color.RED);
 	}
 }

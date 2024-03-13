@@ -62,6 +62,13 @@ public class ShopMain extends JFrame{
 		adminRegist = new AdminRegist();
 		login = new Login();
 		
+		//5페이지를 센터에 부착
+		p_center.add(productRegist);
+		p_center.add(productList);
+		p_center.add(adminList);
+		p_center.add(adminRegist);
+		p_center.add(login);
+		
 		
 		//프레임에 부착 
 		add(p_north, BorderLayout.NORTH);
