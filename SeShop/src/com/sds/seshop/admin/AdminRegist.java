@@ -20,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.sds.seshop.lib.EncryptionManager;
+import com.sds.seshop.lib.FileManager;
 import com.sds.seshop.main.Page;
 import com.sds.seshop.main.ShopMain;
 
@@ -142,6 +143,15 @@ public class AdminRegist extends Page{
 			//유저가 선택한 파일 알아맞추고, 그 이미지 파일을 이용하여 p_preview 패널에  그림을 그려보자
 			File file = chooser.getSelectedFile(); //유저가 선택한 파일!!
 			String filename = file.getAbsolutePath(); //현재 파일의 풀 하드 경로
+			
+			System.out.println("당신이 선택한 파일명 "+ filename);
+			
+			//선택한 파일로부터 확장자 구하기 
+			String ext = FileManager.getExt(filename); //jpg
+			
+			//유일한 파일명으로 사용할 날짜 얻기 
+			
+		
 			ImageIcon icon = new ImageIcon(filename);
 			image = icon.getImage(); //멤버변수인  image에 대입
 			p_preview.repaint();//미리보기 패널에게 다시 그릴 것을 명령 
