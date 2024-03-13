@@ -68,12 +68,8 @@ public class ShopMain extends JFrame{
 		pages[3] = new AdminRegist();
 		pages[4] = new Login();
 		
-		//5페이지에 대한 스타일 
-		pages[0].setVisible(true);
-		pages[1].setVisible(false);
-		pages[2].setVisible(false);
-		pages[3].setVisible(false);
-		pages[4].setVisible(false);
+		//5페이지 중 누구를 보여줄지를 생성시점에 결정하자 
+		showHide(0);
 		
 		//5페이지를 센터에 부착
 		for(int i=0;i<pages.length;i++) {
@@ -99,14 +95,7 @@ public class ShopMain extends JFrame{
 					//지금 당신이 누른 버튼의 index 는 ~~
 					System.out.println("당신이 누는 버튼의 배열의 index 는 "+btn.indexOf(e.getSource()));
 					
-					for(int j=0; j<pages.length;j++){
-						if(j == btn.indexOf(e.getSource())){//선택한 index 번째 페이지만
-							pages[j].setVisible(true); //선택한 index 번째 페이지만 true
-						}else {
-							pages[j].setVisible(false); //조건에 맞지 않으면 false
-						}
-					}
-	
+					showHide(btn.indexOf(e.getSource())); //방금 눌린 버튼의 index 넘기자!
 				}
 			});
 		}
@@ -115,6 +104,19 @@ public class ShopMain extends JFrame{
 		
 		setSize(1000,850);
 		setVisible(true);
+	}
+	
+	//5 페이지중 어느 페이지를 보여줘야 할지를 결정짓는 메서드
+	//js 시간에 탭메뉴 만들기라는 주제로 했었다!!!
+	//showHide(0); 0번째 페이지 보여주기, showHide(3) 3번째 페이지만 보여주기 
+	public void showHide(int index) {//몇번째만 보여줄지 그 index만을 넘겨받자 
+		for(int j=0; j<pages.length;j++){
+			if(j==index){//선택한 index 번째 페이지만
+				pages[j].setVisible(true); //선택한 index 번째 페이지만 true
+			}else {
+				pages[j].setVisible(false); //조건에 맞지 않으면 false
+			}
+		}
 	}
 	
 	//지정한 경로의 아이콘을 반환해주는 메서드 
