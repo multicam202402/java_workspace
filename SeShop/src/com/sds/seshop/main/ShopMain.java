@@ -69,7 +69,7 @@ public class ShopMain extends JFrame{
 		pages[4] = new Login();
 		
 		//5페이지 중 누구를 보여줄지를 생성시점에 결정하자 
-		showHide(0);
+		showHide(pages.length-1);//로그이인인 마지막 페이지부터 보자
 		
 		//5페이지를 센터에 부착
 		for(int i=0;i<pages.length;i++) {
