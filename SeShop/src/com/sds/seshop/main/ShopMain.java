@@ -15,6 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.sds.seshop.admin.AdminList;
+import com.sds.seshop.admin.AdminRegist;
+import com.sds.seshop.admin.Login;
+import com.sds.seshop.product.ProductList;
+import com.sds.seshop.product.ProductRegist;
+
 //쇼핑몰 관리자 페이지의 메인 
 public class ShopMain extends JFrame{
 	JPanel p_north;
@@ -23,6 +29,13 @@ public class ShopMain extends JFrame{
 	JButton[] btn=new JButton[iconArray.length]; //5개짜리 빈 공간(버튼만 담을 수 있는...)
 	
 	JPanel p_center; //페이지들이 교체될 컨테이너(상품등록페이지, 상품목록, 관리자명단, 로그인폼)
+	
+	//상품등록 페이지 
+	ProductRegist productRegist;
+	ProductList productList;
+	AdminList adminList;
+	AdminRegist adminRegist;
+	Login login;
 	
 	public ShopMain() {
 		p_north = new JPanel();
@@ -41,6 +54,14 @@ public class ShopMain extends JFrame{
 		//센터 프레임 생성 
 		p_center = new JPanel();
 		p_center.setBackground(Color.YELLOW);
+		
+		//5페이지 생성 
+		productRegist = new ProductRegist();
+		productList = new ProductList();
+		adminList = new AdminList();
+		adminRegist = new AdminRegist();
+		login = new Login();
+		
 		
 		//프레임에 부착 
 		add(p_north, BorderLayout.NORTH);
