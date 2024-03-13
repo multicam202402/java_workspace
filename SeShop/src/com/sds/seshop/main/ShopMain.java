@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -38,11 +41,11 @@ public class ShopMain extends JFrame{
 	//상품등록 페이지 
 	Page[] pages = new Page[5]; //모든 페이지를 담게될 배열 (오직 Page형만 올 수 있다)
 	
-//	ProductRegist productRegist;
-//	ProductList productList;
-//	AdminList adminList;
-//	AdminRegist adminRegist;
-//	Login login;
+	String driver="oracle.jdbc.driver.OracleDriver";
+	String url="jdbc:oracle:thin:@localhost:1521:XE";
+	String user="seshop";
+	String password="1234";
+	public Connection con; //접속 한 이후,그 접속 정보를 가진 객체. 정보를 가지고 있으므로 추후 접속해제 까지 가능
 	
 	public ShopMain() {
 		p_north = new JPanel();
@@ -84,6 +87,14 @@ public class ShopMain extends JFrame{
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				//db커넥션을 닫을 예정 
+				if(con !=null) {
+					try {
+						con.close();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
 				System.exit(0);//실행중인 프로그램을 프로세스..프로세스 종료
 			}
 		});
@@ -100,10 +111,38 @@ public class ShopMain extends JFrame{
 			});
 		}
 		
-		
-		
 		setSize(1000,850);
 		setVisible(true);
+		
+		//오라클 접속 시도 
+		connect();
+	}
+	
+	//오라클 접속
+	public void connect() {
+		this.setTitle("접속 시도중...");
+		
+		try {
+			Class.forName(driver);
+			this.setTitle("드라이버 로드 성공");
+			
+			//접속 시도
+			//접속이 성공되면 con은 더이상 null 이 아니게 됨..
+			con=DriverManager.getConnection(url, user, password);
+			
+			if(con ==null) {
+				this.setTitle("접속 실패");
+			}else {
+				this.setTitle("오라클 연결 됨");
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			this.setTitle("드라이버를 확인해주세요");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	//5 페이지중 어느 페이지를 보여줘야 할지를 결정짓는 메서드
