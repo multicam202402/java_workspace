@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.sds.seshop.lib.EncryptionManager;
 import com.sds.seshop.main.Page;
 import com.sds.seshop.main.ShopMain;
 
@@ -111,6 +112,8 @@ public class AdminRegist extends Page{
 			String pass= new String(t_pass.getPassword()); //사용자가 입력한 pass
 			String email=t_email.getText();//사용자가 입력한 email
 			String filename="123123.jpg";//사용자가 입력한 filename
+			
+			pass = EncryptionManager.getConvertedData(pass);
 			
 			String sql="insert into admin(admin_idx, id, pass, email, filename)";
 			sql +=" values(seq_admin.nextval, '"+id+"', '"+pass+"', '"+email+"' ,'"+filename+"')";
