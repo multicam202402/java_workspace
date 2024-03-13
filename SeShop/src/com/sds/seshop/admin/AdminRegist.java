@@ -1,6 +1,7 @@
 package com.sds.seshop.admin;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,6 +40,23 @@ public class AdminRegist extends Page{
 		p_preview = new JPanel();
 		bt_regist = new JButton("가입");
 		bt_login = new JButton("Login");
+		
+		//스타일 
+		container.setBackground(Color.LIGHT_GRAY);
+		container.setPreferredSize(new Dimension(600, 700));
+		
+		Dimension d = new Dimension(280, 40);
+		
+		la_id.setPreferredSize(d);
+		t_id.setPreferredSize(d);
+		la_pass.setPreferredSize(d);
+		t_pass.setPreferredSize(d);
+		la_email.setPreferredSize(d);
+		t_email.setPreferredSize(d);
+		la_profile.setPreferredSize(d);
+		bt_profile.setPreferredSize(d);
+		
+		p_preview.setPreferredSize(new Dimension(400, 400));
 		
 	}
 }
