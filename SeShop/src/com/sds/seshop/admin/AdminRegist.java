@@ -40,6 +40,7 @@ public class AdminRegist extends Page{
 	JButton bt_regist, bt_login;
 	JFileChooser chooser; //파일 탐색기
 	Image image=null; //최초엔 그릴것이 없으므로 null, 아직 파일 선택도 안한 상태이니깐..
+	String myName; //등록 메서드에서도 접근할 수 있도록, 멤버변수로 빼놓음
 	
 	//1000 x 800 페이지 정의
 	public AdminRegist(ShopMain shopMain) {
@@ -157,7 +158,7 @@ public class AdminRegist extends Page{
 			//유일한 파일명으로 사용할 날짜 얻기 
 			long time = System.currentTimeMillis(); //밀리세턴드까지의 시간 얻기 
 			
-			String myName = time+"."+ext;//파일명 조합
+			myName = time+"."+ext;//파일명 조합
 			System.out.println(myName);
 			
 			//원본 파일인 filename 과 연관된 입력스트림 연결하고, 바이트 데이터를 읽어서 마시면서 
@@ -224,7 +225,7 @@ public class AdminRegist extends Page{
 			String id=t_id.getText(); //사용자가 입력한 id
 			String pass= new String(t_pass.getPassword()); //사용자가 입력한 pass
 			String email=t_email.getText();//사용자가 입력한 email
-			String filename="123123.jpg";//사용자가 입력한 filename
+			String filename=myName;//사용자가 입력한 filename
 			
 			pass = EncryptionManager.getConvertedData(pass);
 			
