@@ -1,6 +1,8 @@
 package com.sds.seshop.main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
@@ -15,27 +17,22 @@ public class ShopMain extends JFrame{
 	JPanel p_north;
 	JButton bt_regist, bt_list, bt_admin, bt_join, bt_login;
 	JPanel p_center; //페이지들이 교체될 컨테이너(상품등록페이지, 상품목록, 관리자명단, 로그인폼)
+	String[] iconArray= {"product.png","list.png","admin.png","join.png","login.png"};
+	JButton[] btn=new JButton[iconArray.length]; //5개짜리 빈 공간(버튼만 담을 수 있는...)
 	
 	public ShopMain() {
 		p_north = new JPanel();
 		//패키지를 기준으로 자원의 경로를 얻기 
-		URL url = this.getClass().getClassLoader().getResource("product.png");
-		ImageIcon icon = new ImageIcon(url);
 		
-		bt_regist = new JButton(icon);
-		bt_list = new JButton("상품등록");
-		bt_admin = new JButton("관리자 목록");
-		bt_join = new JButton("관리자 등록");
-		bt_login = new JButton("상품등록");
+		Dimension d = new Dimension(75, 60);
 		
-		//스타일
-		
-		//북쪽 패널에 버튼 부착 
-		p_north.add(bt_regist);
-		p_north.add(bt_list);
-		p_north.add(bt_admin);
-		p_north.add(bt_join);
-		p_north.add(bt_login);
+		for(int i=0;i<btn.length;i++) {
+			btn[i] = new JButton(getIcon(iconArray[i]));
+			btn[i].setPreferredSize(d);
+			
+			//북쪽 패널에 버튼 부착 
+			p_north.add(btn[i]);
+		}
 		
 		//프레임에 부착 
 		add(p_north, BorderLayout.NORTH);
@@ -50,6 +47,19 @@ public class ShopMain extends JFrame{
 		
 		setSize(1000,850);
 		setVisible(true);
+	}
+	
+	//지정한 경로의 아이콘을 반환해주는 메서드 
+	//filename에 원하는 이미지 명을 넣으면, 아이콘으로 변환하여 줌
+	public ImageIcon getIcon(String filename) {
+		URL url = this.getClass().getClassLoader().getResource(filename);
+		ImageIcon icon = new ImageIcon(url);
+		//ImageIcon 클래스 자체에는 크기 조정하는 메서드가 지원되지 않으므로, Image로 변환한 후 
+		//Image가 보유한 getScaledInstance() 메서드로 크기를 조정해서 와보자 
+		Image image = icon.getImage(); //이미지로 변환 (이미지가 이미지 아이콘보다 더 넓은 개념)
+		image = image.getScaledInstance(75, 60, Image.SCALE_SMOOTH);
+		
+		return new ImageIcon(image);
 	}
 	
 	public static void main(String[] args) {
