@@ -17,7 +17,6 @@ import com.sds.seshop.main.ShopMain;
 //상품 등록 페이지 
 public class Login extends Page{
 	//1000 x 800 페이지 정의
-	JPanel container;
 	JLabel la_id, la_pass; 
 	JTextField t_id;
 	JPasswordField t_pass;
