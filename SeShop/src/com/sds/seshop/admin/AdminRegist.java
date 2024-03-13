@@ -2,12 +2,17 @@ package com.sds.seshop.admin;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,6 +33,8 @@ public class AdminRegist extends Page{
 	JLabel la_dummy;//프로필 사진의 공백을 메울 목적
 	JPanel p_preview; //사진 미리보기 
 	JButton bt_regist, bt_login;
+	JFileChooser chooser; //파일 탐색기
+	Image image=null; //최초엔 그릴것이 없으므로 null, 아직 파일 선택도 안한 상태이니깐..
 	
 	//1000 x 800 페이지 정의
 	public AdminRegist(ShopMain shopMain) {
@@ -46,9 +53,29 @@ public class AdminRegist extends Page{
 		t_pass  =new JPasswordField();
 		t_email  = new JTextField();
 		bt_profile = new JButton("파일 찾기");
-		p_preview = new JPanel();
+		
+		//p_preview 라는 패널의 자식 클래스를 원래 .java  파일로 정의해야 하지만, 
+		//재사용성이 떨어진다면, 즉 1회성라면 굳이 .java를 외부로 둘 필요가 없다..
+		//내부익명 클래스로 정의하자 
+		p_preview = new JPanel() {
+			public void paint(Graphics g) {
+				g.setColor(Color.YELLOW);//페인트 선택
+				g.fillRect(0,0, 280, 280);
+				
+				if(image ==null) { //아직 사용자들이 이미지를 선택하지 않은 경우엔 문구를 보여준다..
+					g.setColor(Color.RED);
+					g.drawString("파일 선택", 40, 40);
+				}else {
+					//이미지 객체가 채워져 있다면 그림을 그린다....
+					g.drawImage(image, 0, 0, 280, 280, p_preview);
+				}
+				
+			}
+		};
+		
 		bt_regist = new JButton("가입");
 		bt_login = new JButton("Login");
+		chooser = new JFileChooser("D:/js_workspace/images"); //디폴트 경로
 		
 		//스타일 
 		container.setBackground(Color.LIGHT_GRAY);
@@ -84,6 +111,14 @@ public class AdminRegist extends Page{
 		
 		add(container);
 		
+		//파일 찾기 버튼과 리스너 연결 
+		bt_profile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				preview();
+			}
+		});
+		
+		
 		//가입 버튼에 리스너 연결 
 		bt_regist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -98,6 +133,19 @@ public class AdminRegist extends Page{
 				shopMain.showHide(4);
 			}
 		});		
+	}
+	
+	//프로필 파일 열어서 이미지를 패널에 그리기
+	public void preview() {
+		int result = chooser.showOpenDialog(this);
+		if(result == JFileChooser.APPROVE_OPTION) { //열기 눌르면..
+			//유저가 선택한 파일 알아맞추고, 그 이미지 파일을 이용하여 p_preview 패널에  그림을 그려보자
+			File file = chooser.getSelectedFile(); //유저가 선택한 파일!!
+			String filename = file.getAbsolutePath(); //현재 파일의 풀 하드 경로
+			ImageIcon icon = new ImageIcon(filename);
+			image = icon.getImage(); //멤버변수인  image에 대입
+			p_preview.repaint();//미리보기 패널에게 다시 그릴 것을 명령 
+		}
 	}
 	
 	// 회원가입 메서드 정의 
