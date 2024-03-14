@@ -21,10 +21,12 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
+import com.sds.seshop.lib.FileManager;
 import com.sds.seshop.main.Page;
 import com.sds.seshop.main.ShopMain;
 
@@ -164,6 +166,9 @@ public class ProductRegist extends Page{
 															//즉 웹브라우저의 역할을 일 부 수행할 수 있는 객체
 		InputStream is=null; //finally에서 닫아야 하므로  try문 밖에 선언 
 		FileOutputStream fos=null; //파일을 대상으로 한 바이트 기반출력 스트림 
+										//모든 출력스트림이 이런 기능을 가진건 아니다. 오직 
+										//파일 출력스트림에만 특별히 빈(empty)파일을 생성하는 능력이 있슴
+		
 		
 		try {
 			URL url=new URL(t_url.getText());
@@ -174,7 +179,11 @@ public class ProductRegist extends Page{
 			is = httpCon.getInputStream();
 			
 			//읽어들인 데이터를 출력시킬 파일 출력스트림 생성 
-			fos = new FileOutputStream("C:/Users/zino1/SeShop/파일명");
+			long time = System.currentTimeMillis(); //새로운 파일이름
+			String ext = FileManager.getExt(t_url.getText()); //확장자
+			String myName=time+"."+ext; //파일명 완성 하지만, empty 상태임
+			
+			fos = new FileOutputStream("C:/Users/zino1/SeShop/"+myName);
 			
 			int data=-1;
 			
@@ -182,13 +191,31 @@ public class ProductRegist extends Page{
 				data = is.read(); //스트림으로부터 1 byte 읽어오기
 				if(data==-1)break; //파일의 끝을 만나면 루프 중단
 				System.out.println(data);
+				fos.write(data); //1 byte 내려쓰기!!!
 			}
 			
+			JOptionPane.showMessageDialog(this, "이미지 수집 완료");
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			if(fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 		
 	}
