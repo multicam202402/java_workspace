@@ -46,10 +46,13 @@ public class ProductRegist extends Page{
 	//따라서 콤보박스의 각 아이템의 index와 위치가 일치하는 배열과 같은 존재를 두자..기왕이면 
 	//ArrayList로 가자!!
 	ArrayList<Integer> topIdxList = new ArrayList<Integer>();
+	ArrayList<Integer> subIdxList = new ArrayList<Integer>();
 	
 	Image image; //미리보기 패널이 그려야 할 이미지, 지금은 null 이지만, 
 						//복사가 완료되면 곧 인스턴스 생성됨
 	
+	String myName;//새로운 파일명
+	int subcategory_idx;
 	
 	public ProductRegist(ShopMain shopMain) {
 		super(Color.GREEN);
@@ -158,7 +161,24 @@ public class ProductRegist extends Page{
 						
 						getSubCategory(topcategory_idx); //서브 카테고리 목록 가져오기
 					}
+				}
+			}
+		});
+		
+		//하위 카테고리 콤보 박스와 리스너 연결 
+		b_sub.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					//콤보박스의 값을 변경할때마다 subcategory_idx값을 subIdxList 의 ArrayList 에서
+					//가져오자 
 					
+					//콤보박스의 첫번째 칸은 안내문구이므로, ArrayList 가져오지 말자
+					int index = b_sub.getSelectedIndex(); //유저가 선택한 콤보박스의 index 
+					
+					if(index >0) {
+						subcategory_idx = subIdxList.get(index-1);	
+						System.out.println("당신이 선택한 하위 카테고리의 pk는 "+subcategory_idx);
+					}
 				}
 			}
 		});
@@ -192,14 +212,25 @@ public class ProductRegist extends Page{
 	}
 	
 	public void regist() {
+		String product_name = t_product_name.getText(); //상품명
+		int price = Integer.parseInt(t_price.getText()); //가격  
+		String brand=t_brand.getText(); //브랜드 
+		String filename=myName; //새롭게 다운로드에 의해 생성된 파일명
+		
+		//하위 카테고리 idx값은 멤버변수로 이미 있슴
+		
+		String sql="insert into product(product_idx, product_name, price, brand,filename,subcategory_idx)";
+		sql +=" values(seq_product.nextval, '"+product_name+"', "+price+", '"+brand+"','"+filename+"', "+subcategory_idx+")";
+		
+		System.out.println(sql);
 		
 	}
 	
 	//이미지 미리보기 
-	public void preview() {
-		//패널에게 그림을 다시 그리라고 명령하자  repaint() --> update() --> paint() 
-		p_preview.repaint();
-	}
+//	public void preview() {
+//		//패널에게 그림을 다시 그리라고 명령하자  repaint() --> update() --> paint() 
+//		p_preview.repaint();
+//	}
 	
 	//인터넷상의 이미지 주소를 이용하여, 나의 하드디스크에 그 이미지를 저장하자(수집)
 	//웹서버로부터 정적 자원을 가져오려면, HTTP 프로토콜을 사용해야 한다.. 
@@ -228,7 +259,7 @@ public class ProductRegist extends Page{
 			//읽어들인 데이터를 출력시킬 파일 출력스트림 생성 
 			long time = System.currentTimeMillis(); //새로운 파일이름
 			String ext = FileManager.getExt(t_url.getText()); //확장자
-			String myName=time+"."+ext; //파일명 완성 하지만, empty 상태임
+			myName=time+"."+ext; //파일명 완성 하지만, empty 상태임
 			
 			//출력스트림에 의해 새롭게 생성되는 파일은 추후, 복사가 완료되면 저 위에 있는 p_preview 패널의
 			//그림의 대상이 되어야 함~~
@@ -354,8 +385,14 @@ public class ProductRegist extends Page{
 			b_sub.removeAllItems();//모든 아이템 지우기~~텅~~
 			
 			//반복문으로 next() 해 가면서 두번째 콤보박스에 채우자!
+			b_sub.addItem("카테고리 선택 ▼");
+			
 			while(rs.next()) {
+				//콤보 박스에 데이터 채우기
 				b_sub.addItem(rs.getString("subname"));
+				
+				//콤보 박스와 짝을 이루는 ArrayList에도 데이터 채우기(subcategory_idx)
+				subIdxList.add(rs.getInt("subcategory_idx"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
