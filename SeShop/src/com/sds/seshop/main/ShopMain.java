@@ -65,9 +65,9 @@ public class ShopMain extends JFrame{
 		p_center.setBackground(Color.YELLOW);
 		
 		//5페이지 생성 
-		pages[0] = new ProductRegist();
-		pages[1] = new ProductList();
-		pages[2] = new AdminList();
+		pages[0] = new ProductRegist(this); //상품 등록 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[1] = new ProductList(this); //상품 목록 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[2] = new AdminList(this); //관리자 목록 객체는 ShoPMain 인스턴스 주소값을 원함
 		pages[3] = new AdminRegist(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
 		pages[4] = new Login(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
 		
