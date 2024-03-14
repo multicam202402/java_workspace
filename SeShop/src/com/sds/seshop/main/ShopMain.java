@@ -49,6 +49,8 @@ public class ShopMain extends JFrame{
 	public boolean loginflag=false; //로그인 했는지 여부를 판단해주는 멤버변수
 	
 	public ShopMain() {
+		connect();//오라클 접속 시도
+		
 		p_north = new JPanel();
 		
 		Dimension d = new Dimension(75, 60);
@@ -114,8 +116,7 @@ public class ShopMain extends JFrame{
 		setSize(1000,850);
 		setVisible(true);
 		
-		//오라클 접속 시도 
-		connect();
+		
 	}
 	
 	//오라클 접속
@@ -134,6 +135,7 @@ public class ShopMain extends JFrame{
 				this.setTitle("접속 실패");
 			}else {
 				this.setTitle("오라클 연결 됨");
+				System.out.println("오라클 연결 ");
 			}
 			
 		} catch (ClassNotFoundException e) {
