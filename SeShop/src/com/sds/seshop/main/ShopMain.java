@@ -46,6 +46,7 @@ public class ShopMain extends JFrame{
 	String user="seshop";
 	String password="1234";
 	public Connection con; //접속 한 이후,그 접속 정보를 가진 객체. 정보를 가지고 있으므로 추후 접속해제 까지 가능
+	public boolean loginflag=false; //로그인 했는지 여부를 판단해주는 멤버변수
 	
 	public ShopMain() {
 		p_north = new JPanel();
@@ -171,6 +172,18 @@ public class ShopMain extends JFrame{
 		
 		return new ImageIcon(image);
 	}
+	
+	//제목창 관리 메서드 정의 
+	public void setCurrentTitle(String id) {
+		if(loginflag) {
+			//로그인 성공시의 메시지
+			this.setTitle("오라클 접속 중 - "+id+"님 로그인 중");
+		}else {
+			//로그인 실패시의 메시지
+			this.setTitle("오라클 접속 중 - 로그인해 주세요");
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		new ShopMain();

@@ -8,8 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.print.attribute.standard.JobKOctetsProcessed;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -100,10 +102,18 @@ public class Login extends Page{
 			//왜? 커서가 1칸이라도 이동가능하므로
 			boolean result = rs.next();
 			if(result) {
-				System.out.println("관리자가 맞네요");
+				JOptionPane.showMessageDialog(this, "인증 성공");
+				shopMain.loginflag=true;
+				
+				//프레임의 메시지를 출력
+				shopMain.setCurrentTitle(id);
 			}else {
-				System.out.println("로그인 정보를 확인해주세요");
+				JOptionPane.showMessageDialog(this, "로그인 정보가 올바르지 않아요");
+				shopMain.loginflag=false;
 			}
+			
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
