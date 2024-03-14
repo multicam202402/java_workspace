@@ -128,7 +128,7 @@ public class ProductRegist extends Page{
 					int topcategory_idx = topIdxList.get(index);
 					System.out.println("부모의 주민번호는 "+topcategory_idx);
 					
-					getSubCategory(); //서브 카테고리 목록 가져오기
+					getSubCategory(topcategory_idx); //서브 카테고리 목록 가져오기
 				}
 			}
 		});
@@ -179,12 +179,13 @@ public class ProductRegist extends Page{
 		
 	}
 	
-	public void getSubCategory() {
+	public void getSubCategory(int topcategory_idx) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
 		//String sql="select * subcategory where topcategory=내가선택한top의 idx값";
-		String sql="select * subcategory where topcategory=콤보박스로부터  idx얻어와야함??";
+		String sql="select * from subcategory where topcategory_idx="+topcategory_idx;
+		System.out.println(sql);//쿼리문 검증 
 		
 		//pstmt=shopMain.con.prepareStatement(sql);
 	}
