@@ -44,6 +44,9 @@ public class ProductRegist extends Page{
 	//ArrayList로 가자!!
 	ArrayList<Integer> topIdxList = new ArrayList<Integer>();
 	
+
+	
+	
 	public ProductRegist(ShopMain shopMain) {
 		super(Color.GREEN);
 		this.shopMain =shopMain;
@@ -97,6 +100,9 @@ public class ProductRegist extends Page{
 		
 		la_download.setPreferredSize(d);
 		bar.setPreferredSize(d);
+		bar.setStringPainted(true);//바에 글쓰 표현 가능
+		bar.setBackground(Color.YELLOW);
+		bar.setForeground(Color.ORANGE);
 		
 		la_preview.setPreferredSize(d);
 		p_preview.setPreferredSize(new Dimension(280, 280));
@@ -151,7 +157,17 @@ public class ProductRegist extends Page{
 		//수집 버튼에 리스너 연결 
 		bt_collect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				downLoadFromURL();
+				
+				//소모품으로써 쓰레드 한개를 생성함
+				Thread thread=new Thread() {
+					//개발자는 쓰레드로 실행시키고픈 로직을 run() 에 작성해놓으면, jvm이 알아서 
+					//호출해준다..하지만 그러기 위해서는 생성된 쓰레드를  start() 메서드로 Runnable영역
+					//으로 밀어넣어야 한다..
+					public void run() {
+						downLoadFromURL();						
+					}
+				};
+				thread.start();//Runnable 로 진입
 			}
 		});		
 	}
@@ -169,11 +185,13 @@ public class ProductRegist extends Page{
 										//모든 출력스트림이 이런 기능을 가진건 아니다. 오직 
 										//파일 출력스트림에만 특별히 빈(empty)파일을 생성하는 능력이 있슴
 		
-		
 		try {
 			URL url=new URL(t_url.getText());
 			urlCon = url.openConnection(); //이 시점에 고양이가 반응을 할까?
 			httpCon = (HttpURLConnection)urlCon; //부모자료형에서 자식자료형으로 down Casting
+			
+			int total = httpCon.getContentLength(); //정적 자원의 바이트 용량
+			System.out.println("이미지 크기는 "+total+" byte");
 			
 			//웹서버에 있는 정적 자원에 대해 스트림을 꽂아버리자!!!
 			is = httpCon.getInputStream();
@@ -186,11 +204,20 @@ public class ProductRegist extends Page{
 			fos = new FileOutputStream("C:/Users/zino1/SeShop/"+myName);
 			
 			int data=-1;
+			int count=0; //몇번 읽어들이고 있는지 체크하기 위한 카운터 
 			
 			while(true) {
 				data = is.read(); //스트림으로부터 1 byte 읽어오기
 				if(data==-1)break; //파일의 끝을 만나면 루프 중단
-				System.out.println(data);
+				//System.out.println(data);
+				count++;//몇번째 읽고 있는지 수를 세자
+				
+				float percent = (count/(float)total)*100; //총용량 중 몇번째까지 읽었는지의 백분율
+				System.out.println((int)percent+"%");
+				
+				//너무 빨라서 그래픽 갱신이 눈에 보이지도 못함, 쓰레드로 속도 조절 
+				bar.setValue((int)percent);
+				
 				fos.write(data); //1 byte 내려쓰기!!!
 			}
 			
