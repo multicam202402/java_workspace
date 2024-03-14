@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.plaf.DimensionUIResource;
 
 import com.sds.seshop.main.Page;
 import com.sds.seshop.main.ShopMain;
@@ -54,9 +55,51 @@ public class ProductRegist extends Page{
 		bt_list = new JButton("상품목록");
 		
 		//스타일
+		Dimension d = new Dimension(280, 35);
+		la_top.setPreferredSize(d);
+		b_top.setPreferredSize(d);
 		
+		la_sub.setPreferredSize(d);
+		b_sub.setPreferredSize(d);
+		
+		la_product_name.setPreferredSize(d);
+		t_product_name.setPreferredSize(d);
+		
+		la_price.setPreferredSize(d);
+		t_price.setPreferredSize(d);
+		
+		la_brand.setPreferredSize(d);
+		t_brand.setPreferredSize(d);
+		
+		la_image.setPreferredSize(d);
+		t_url.setPreferredSize(new Dimension(220, 35));
+		
+		la_download.setPreferredSize(d);
+		bar.setPreferredSize(d);
+		
+		la_preview.setPreferredSize(d);
+		p_preview.setPreferredSize(new Dimension(280, 280));
 		
 		//조립 
+		container.add(la_top);
+		container.add(b_top);
+		container.add(la_sub);
+		container.add(b_sub);
+		container.add(la_product_name);
+		container.add(t_product_name);
+		container.add(la_price);
+		container.add(t_price);
+		container.add(la_brand);
+		container.add(t_brand);
+		container.add(la_image);
+		container.add(t_url);
+		container.add(bt_collect);
+		container.add(la_download);
+		container.add(bar);
+		container.add(la_preview);
+		container.add(p_preview);
+		container.add(bt_regist);
+		container.add(bt_list);
 		
 		add(container);
 	}
