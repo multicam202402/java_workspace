@@ -187,7 +187,36 @@ public class ProductRegist extends Page{
 		String sql="select * from subcategory where topcategory_idx="+topcategory_idx;
 		System.out.println(sql);//쿼리문 검증 
 		
-		//pstmt=shopMain.con.prepareStatement(sql);
+		try {
+			pstmt=shopMain.con.prepareStatement(sql); //쿼리 준비 
+			
+			//쿼리실행 
+			rs = pstmt.executeQuery(); //실행 후 표 받기 
+			
+			//반복문으로 next() 해 가면서 두번째 콤보박스에 채우자!
+			while(rs.next()) {
+				b_sub.addItem(rs.getString("subname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
 	}
 }
 
