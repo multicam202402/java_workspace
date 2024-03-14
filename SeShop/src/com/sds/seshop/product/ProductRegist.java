@@ -125,10 +125,14 @@ public class ProductRegist extends Page{
 					
 					//원칙은 get() 을 통해 얻어진 객체가 Integer 이지만, 개발자가 int 형으로 
 					//대입이 가능한 현상을 unBoxing 이라 한다..이것 또한 편의성때문에 지원한다..
-					int topcategory_idx = topIdxList.get(index);
-					System.out.println("부모의 주민번호는 "+topcategory_idx);
 					
-					getSubCategory(topcategory_idx); //서브 카테고리 목록 가져오기
+					if(index >0) { //0번째는 이미 안내 문구가 들어있으므로, 0번째보다 큰 애들만 반응을 보이자 
+						int topcategory_idx = topIdxList.get(index-1);
+						System.out.println("부모의 주민번호는 "+topcategory_idx);
+						
+						getSubCategory(topcategory_idx); //서브 카테고리 목록 가져오기
+					}
+					
 				}
 			}
 		});
@@ -145,6 +149,9 @@ public class ProductRegist extends Page{
 			
 			//실행 : DmL-executeUpdate(), select-executeQuery() 실행 후 ResultSet 반환
 			rs = pstmt.executeQuery(); //select 문 전송~~후 결과 표 받기
+			
+			//0번째 요소에 안내 문구 채우기 
+			b_top.addItem("카테고리 선택▼");
 			
 			while(rs.next()) { //next() 메서드가 참을 반환하는 동안, 커서  전진 
 				b_top.addItem(rs.getString("topname"));
@@ -192,6 +199,9 @@ public class ProductRegist extends Page{
 			
 			//쿼리실행 
 			rs = pstmt.executeQuery(); //실행 후 표 받기 
+			
+			//반복문 돌기전에 기존의 아이템이 있다면 모두 삭제처리~~~
+			b_sub.removeAllItems();//모든 아이템 지우기~~텅~~
 			
 			//반복문으로 next() 해 가면서 두번째 콤보박스에 채우자!
 			while(rs.next()) {

@@ -29,8 +29,6 @@ public class ResCollector {
 			int data=-1;
 			int count=0;
 			
-			byte[] buff = new byte[1024];
-			
 			while(true) {
 				data = is.read();
 				if(data==-1)break;
