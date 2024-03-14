@@ -2,6 +2,8 @@ package com.sds.seshop.product;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -44,7 +47,8 @@ public class ProductRegist extends Page{
 	//ArrayList로 가자!!
 	ArrayList<Integer> topIdxList = new ArrayList<Integer>();
 	
-
+	Image image; //미리보기 패널이 그려야 할 이미지, 지금은 null 이지만, 
+						//복사가 완료되면 곧 인스턴스 생성됨
 	
 	
 	public ProductRegist(ShopMain shopMain) {
@@ -74,7 +78,12 @@ public class ProductRegist extends Page{
 		t_url = new JTextField();
 		bt_collect = new JButton("수집");
 		bar = new JProgressBar();
-		p_preview  = new JPanel();
+		p_preview  = new JPanel() {
+			public void paint(Graphics g) {
+				g.drawImage(image, 0, 0, 280, 280, container);
+			}
+		}; //페인트 메서드 재정의
+		
 		bt_regist = new JButton("상품등록");
 		bt_list = new JButton("상품목록");
 		
@@ -164,12 +173,32 @@ public class ProductRegist extends Page{
 					//호출해준다..하지만 그러기 위해서는 생성된 쓰레드를  start() 메서드로 Runnable영역
 					//으로 밀어넣어야 한다..
 					public void run() {
-						downLoadFromURL();						
+						downLoadFromURL();	
+						
+						//이미지 미리보기
+						//preview();
 					}
 				};
 				thread.start();//Runnable 로 진입
 			}
+		});	
+		
+		//상품 등록 버튼에 리스너 연결 
+		bt_regist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				regist();
+			}
 		});		
+	}
+	
+	public void regist() {
+		
+	}
+	
+	//이미지 미리보기 
+	public void preview() {
+		//패널에게 그림을 다시 그리라고 명령하자  repaint() --> update() --> paint() 
+		p_preview.repaint();
 	}
 	
 	//인터넷상의 이미지 주소를 이용하여, 나의 하드디스크에 그 이미지를 저장하자(수집)
@@ -201,7 +230,11 @@ public class ProductRegist extends Page{
 			String ext = FileManager.getExt(t_url.getText()); //확장자
 			String myName=time+"."+ext; //파일명 완성 하지만, empty 상태임
 			
+			//출력스트림에 의해 새롭게 생성되는 파일은 추후, 복사가 완료되면 저 위에 있는 p_preview 패널의
+			//그림의 대상이 되어야 함~~
 			fos = new FileOutputStream("C:/Users/zino1/SeShop/"+myName);
+			
+			
 			
 			int data=-1;
 			int count=0; //몇번 읽어들이고 있는지 체크하기 위한 카운터 
@@ -221,7 +254,14 @@ public class ProductRegist extends Page{
 				fos.write(data); //1 byte 내려쓰기!!!
 			}
 			
-			JOptionPane.showMessageDialog(this, "이미지 수집 완료");
+			//p_preview라는 패널을 위해 이미지를 제공해주자
+			ImageIcon icon=new ImageIcon("C:/Users/zino1/SeShop/"+myName);
+			image = icon.getImage();
+			
+			p_preview.repaint();
+			
+			
+			//JOptionPane.showMessageDialog(this, "이미지 수집 완료");
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
