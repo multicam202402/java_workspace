@@ -31,7 +31,7 @@ public class ShopMain extends JFrame{
 	JButton bt_regist, bt_list, bt_admin, bt_join, bt_login;
 	String[] iconArray= {"product.png","list.png","admin.png","join.png","login.png"};
 	
-	//js  와 달리, 자바의 순수 배열은 js 처럼 다양한 indexOf  등이 없다. 대신 컬렉션 프레임웍에 들어있다.
+	//js 와 달리, 자바의 순수 배열은 js 처럼 다양한 indexOf  등이 없다. 대신 컬렉션 프레임웍에 들어있다.
 	//아래의 배열을 Collection Framework 에서 지원하는 3가지 객체 중 선택하여 바꾸자
 	//1) 순서잇는 집합  2) 순서없는 집합  3)  key-value
 	ArrayList<JButton> btn=new ArrayList<JButton>(); //5개짜리 빈 공간(버튼만 담을 수 있는...)
@@ -49,7 +49,6 @@ public class ShopMain extends JFrame{
 	
 	public ShopMain() {
 		p_north = new JPanel();
-		//패키지를 기준으로 자원의 경로를 얻기 
 		
 		Dimension d = new Dimension(75, 60);
 		
@@ -161,6 +160,8 @@ public class ShopMain extends JFrame{
 	//지정한 경로의 아이콘을 반환해주는 메서드 
 	//filename에 원하는 이미지 명을 넣으면, 아이콘으로 변환하여 줌
 	public ImageIcon getIcon(String filename) {
+		
+		//패키지를 기준으로 자원의 경로를 얻기 
 		URL url = this.getClass().getClassLoader().getResource(filename);
 		ImageIcon icon = new ImageIcon(url);
 		//ImageIcon 클래스 자체에는 크기 조정하는 메서드가 지원되지 않으므로, Image로 변환한 후 
