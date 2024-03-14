@@ -2,9 +2,12 @@ package com.sds.seshop.product;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,6 +27,11 @@ public class ProductRegist extends Page{
 	JProgressBar bar; //다운로드 현황 
 	JPanel p_preview; //이미지 미리보기 패널	
 	JButton bt_collect, bt_regist, bt_list; //수집, 상품 등록, 목록 버튼
+	
+	//콤보박스가 디자인에 초첨을 맞춰놓은 컴포넌트 이기 때문에, 실제 데이터를 담을 수 없다..
+	//따라서 콤보박스의 각 아이템의 index와 위치가 일치하는 배열과 같은 존재를 두자..기왕이면 
+	//ArrayList로 가자!!
+	ArrayList<Integer> topIdxList = new ArrayList<Integer>();
 	
 	public ProductRegist(ShopMain shopMain) {
 		super(Color.GREEN);
@@ -106,6 +114,24 @@ public class ProductRegist extends Page{
 		add(container);
 		
 		getTopCategory();//최상위 카테고리 데이터 불러오기
+		
+		//상위 카테고리에 리스너 연결 
+		b_top.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) { //html의 onChage 와 동일
+				
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					int index=b_top.getSelectedIndex(); //현재 콤보박스의 아이템 중 몇번째 칸을 선택했는지 반환
+					System.out.println(index+" 번째 칸 선택했어");
+					
+					//원칙은 get() 을 통해 얻어진 객체가 Integer 이지만, 개발자가 int 형으로 
+					//대입이 가능한 현상을 unBoxing 이라 한다..이것 또한 편의성때문에 지원한다..
+					int topcategory_idx = topIdxList.get(index);
+					System.out.println("부모의 주민번호는 "+topcategory_idx);
+					
+					getSubCategory(); //서브 카테고리 목록 가져오기
+				}
+			}
+		});
 	}
 	
 	public void getTopCategory() {
@@ -122,6 +148,12 @@ public class ProductRegist extends Page{
 			
 			while(rs.next()) { //next() 메서드가 참을 반환하는 동안, 커서  전진 
 				b_top.addItem(rs.getString("topname"));
+				
+				//상위 카테고리의 idx도 담아두자				
+				topIdxList.add(rs.getInt("topcategory_idx")); //원칙상 int 기본 자료형이므로, 즉 객체자료형이 아니므로 
+											//ArrayList에 직접 담을 수 없어야 하지만, sun 편의상 
+											//컬렉션 객체에 기본 자료형을 담을 자동으로 Wrapper형태로
+										//변환해주는 현상을 지원.. 기본자료형을 boxing 처리라 한다
 			}
 			
 		} catch (SQLException e) {
@@ -147,6 +179,15 @@ public class ProductRegist extends Page{
 		
 	}
 	
+	public void getSubCategory() {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		//String sql="select * subcategory where topcategory=내가선택한top의 idx값";
+		String sql="select * subcategory where topcategory=콤보박스로부터  idx얻어와야함??";
+		
+		//pstmt=shopMain.con.prepareStatement(sql);
+	}
 }
 
 
