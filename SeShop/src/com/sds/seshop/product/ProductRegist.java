@@ -2,8 +2,17 @@ package com.sds.seshop.product;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +64,7 @@ public class ProductRegist extends Page{
 		b_top = new JComboBox<String>();
 		b_sub = new JComboBox<String>();
 		t_product_name = new JTextField();
-		t_price = new JTextField();
+		t_price = new JTextField("30000");
 		t_brand = new JTextField();
 		t_url = new JTextField();
 		bt_collect = new JButton("수집");
@@ -136,7 +145,54 @@ public class ProductRegist extends Page{
 				}
 			}
 		});
+		
+		//수집 버튼에 리스너 연결 
+		bt_collect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				downLoadFromURL();
+			}
+		});		
 	}
+	
+	//인터넷상의 이미지 주소를 이용하여, 나의 하드디스크에 그 이미지를 저장하자(수집)
+	//웹서버로부터 정적 자원을 가져오려면, HTTP 프로토콜을 사용해야 한다.. 
+	//javaSE에서는  HttpURLConnection 객체가 웹상의 요청을 시도할 수 있는 객체로 지원됨.
+	//즉 웹브라우저의 요청 행위를 따라해보자..이 실습을 위해 오전의 톰켓의 이미지를 다운로드 해보자 
+	public void downLoadFromURL() {
+		URLConnection urlCon=null;
+		HttpURLConnection httpCon=null; //웹 상의 요청을 시도하고 응답을 가져올 수 있는 객체 
+															//즉 웹브라우저의 역할을 일 부 수행할 수 있는 객체
+		InputStream is=null; //finally에서 닫아야 하므로  try문 밖에 선언 
+		FileOutputStream fos=null; //파일을 대상으로 한 바이트 기반출력 스트림 
+		
+		try {
+			URL url=new URL(t_url.getText());
+			urlCon = url.openConnection(); //이 시점에 고양이가 반응을 할까?
+			httpCon = (HttpURLConnection)urlCon; //부모자료형에서 자식자료형으로 down Casting
+			
+			//웹서버에 있는 정적 자원에 대해 스트림을 꽂아버리자!!!
+			is = httpCon.getInputStream();
+			
+			//읽어들인 데이터를 출력시킬 파일 출력스트림 생성 
+			fos = new FileOutputStream("C:/Users/zino1/SeShop/파일명");
+			
+			int data=-1;
+			
+			while(true) {
+				data = is.read(); //스트림으로부터 1 byte 읽어오기
+				if(data==-1)break; //파일의 끝을 만나면 루프 중단
+				System.out.println(data);
+			}
+			
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public void getTopCategory() {
 		//콤보박스에 최상위 카테고리를 넣어주기 
