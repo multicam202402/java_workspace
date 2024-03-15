@@ -215,9 +215,7 @@ public class ProductRegist extends Page{
 			public void actionPerformed(ActionEvent e) {
 				shopMain.showHide(ShopMain.PRODUCT_LIST);
 				//이동할때는 갱신된 상품을 봐야하므로, ProductList 페이지가 보유한 getProductList() 호출
-				//shopMain.pages[1] = shopMain.pages[ShopMain.PRODUCT_LIST];
-				ProductList productList = (ProductList)shopMain.pages[ShopMain.PRODUCT_LIST];
-				productList.getProductList();//상품 갱신
+				shopMain.getProductList();
 			}
 		});		
 

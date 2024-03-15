@@ -21,8 +21,10 @@ public class ProductTableModel extends AbstractTableModel{
 		return column[col];
 	}
 	
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return "가디건";
+	public Object getValueAt(int row, int col) {
+		String[] record = list.get(row);//행을 가져온다 
+		
+		return record[col];
 	}
 	
 }

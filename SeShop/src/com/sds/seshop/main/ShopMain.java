@@ -113,9 +113,16 @@ public class ShopMain extends JFrame{
 			btn.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//지금 당신이 누른 버튼의 index 는 ~~
-					System.out.println("당신이 누는 버튼의 배열의 index 는 "+btn.indexOf(e.getSource()));
+					int index=btn.indexOf(e.getSource());
 					
-					showHide(btn.indexOf(e.getSource())); //방금 눌린 버튼의 index 넘기자!
+					System.out.println("당신이 누는 버튼의 배열의 index 는 "+index);
+					showHide(index); //방금 눌린 버튼의 index 넘기자!
+					
+					//상품 목록 버튼이라면..상품 갱신 메서드 호출 
+					if(index==PRODUCT_LIST) {
+						getProductList();
+					}
+					
 				}
 			});
 		}
@@ -165,6 +172,13 @@ public class ShopMain extends JFrame{
 				pages[j].setVisible(false); //조건에 맞지 않으면 false
 			}
 		}
+	}
+	
+	//상품 목록 버튼 누를때 처리 
+	public void getProductList() {
+		ProductList productList = (ProductList)pages[ShopMain.PRODUCT_LIST];
+		productList.getProductList();//상품 갱신
+		productList.table.updateUI();//JTable 새로고침
 	}
 	
 	//지정한 경로의 아이콘을 반환해주는 메서드 

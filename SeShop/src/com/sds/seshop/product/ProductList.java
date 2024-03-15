@@ -16,7 +16,7 @@ import com.sds.seshop.main.ShopMain;
 
 //상품 목록 페이지 
 public class ProductList extends Page{
-	JTable table;
+	public JTable table;
 	JScrollPane scroll;
 	JPanel p_south;
 	ProductTableModel model;
