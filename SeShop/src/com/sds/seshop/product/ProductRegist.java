@@ -208,7 +208,15 @@ public class ProductRegist extends Page{
 			public void actionPerformed(ActionEvent e) {
 				regist();
 			}
+		});
+		
+		//상품 목록 버튼에 리스너 연결 
+		bt_list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				shopMain.showHide(1);
+			}
 		});		
+		
 	}
 	
 	public void regist() {
@@ -224,6 +232,31 @@ public class ProductRegist extends Page{
 		
 		System.out.println(sql);
 		
+		//준비된 쿼리 실행  DmL- executeUpdate() 수행 후 DML에 의해 영향을 받은 record 수 반환
+		//  insert 인 경우 1 반환, update - 조건에 맞는 수,  delete - 조건에 맞는 수 
+		// 셋 모두 0보다는 커야 함 , 따라서 0이 나오면 수행 못햇다는 뜻
+		//, select - executeQuery() :ResultSet 
+		PreparedStatement pstmt=null;
+		
+		try {
+			pstmt=shopMain.con.prepareStatement(sql); //쿼리문 준비 
+			int result = pstmt.executeUpdate(); //쿼리 실행
+			if(result <1) {
+				JOptionPane.showMessageDialog(this, "등록되지 않았습니다 ㅜㅜ");
+			}else {
+				JOptionPane.showMessageDialog(this, "등록 성공 ^.^");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt !=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	//이미지 미리보기 
@@ -382,7 +415,10 @@ public class ProductRegist extends Page{
 			rs = pstmt.executeQuery(); //실행 후 표 받기 
 			
 			//반복문 돌기전에 기존의 아이템이 있다면 모두 삭제처리~~~
-			b_sub.removeAllItems();//모든 아이템 지우기~~텅~~
+			b_sub.removeAllItems();//모든 아이템 지우기~~텅~~ //화면에서 제거 
+			
+			subIdxList.removeAll(subIdxList);//메모리에서 제거 
+			
 			
 			//반복문으로 next() 해 가면서 두번째 콤보박스에 채우자!
 			b_sub.addItem("카테고리 선택 ▼");
@@ -394,6 +430,9 @@ public class ProductRegist extends Page{
 				//콤보 박스와 짝을 이루는 ArrayList에도 데이터 채우기(subcategory_idx)
 				subIdxList.add(rs.getInt("subcategory_idx"));
 			}
+			
+			System.out.println("현재까지 쌓인 자식 카테고리의 수 "+subIdxList.size());
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
