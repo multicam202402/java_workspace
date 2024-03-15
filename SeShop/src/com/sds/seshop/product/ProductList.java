@@ -3,6 +3,8 @@ package com.sds.seshop.product;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,6 +47,28 @@ public class ProductList extends Page{
 		container.add(scroll); //센터에 부착됨 
 		container.add(p_south, BorderLayout.SOUTH); //south 에 부착
 		add(container);
+		
+		//JTable 과 마우스 리스너 연결 
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow(); //층수
+				int col = table.getSelectedColumn(); //호수
+				
+				//아래의 코드에서 0번째 컬럼만 가져와야 하는 이유? 유저가 어떤 곳을 눌러도, 
+				//개발 시 필요한 데이터는 product_idx 이므로..product_idx는 0번째 컬럼에 들어있으니깐..
+				String value = (String)table.getValueAt(row, 0); 
+				
+				System.out.println(row+","+col+",의 값은 "+value);
+				
+				getProductDetail(Integer.parseInt(value));//상품 한건 가져오기
+			}
+		});
+	}
+	
+	//선택한 상품 한건 가져오기 
+	public void getProductDetail(int product_idx) {
+		String sql="select * from product where product_idx="+product_idx;
+		System.out.println(sql);
 	}
 	
 	//상품 가져오기 
