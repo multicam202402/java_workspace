@@ -39,7 +39,14 @@ public class ShopMain extends JFrame{
 	JPanel p_center; //페이지들이 교체될 컨테이너(상품등록페이지, 상품목록, 관리자명단, 로그인폼)
 	
 	//상품등록 페이지 
-	Page[] pages = new Page[5]; //모든 페이지를 담게될 배열 (오직 Page형만 올 수 있다)
+	public Page[] pages = new Page[5]; //모든 페이지를 담게될 배열 (오직 Page형만 올 수 있다)
+	
+	//직관성을 위해 의미가 부여된 상수를 활용하자
+	public static final int PRODUCT_REGIST=0; 
+	public static final int PRODUCT_LIST=1; 
+	public static final int ADMIN_LIST=2; 
+	public static final int ADMIN_REGIST=3; 
+	public static final int LOGIN=4;
 	
 	String driver="oracle.jdbc.driver.OracleDriver";
 	String url="jdbc:oracle:thin:@localhost:1521:XE";
@@ -67,11 +74,11 @@ public class ShopMain extends JFrame{
 		p_center.setBackground(Color.YELLOW);
 		
 		//5페이지 생성 
-		pages[0] = new ProductRegist(this); //상품 등록 객체는 ShoPMain 인스턴스 주소값을 원함
-		pages[1] = new ProductList(this); //상품 목록 객체는 ShoPMain 인스턴스 주소값을 원함
-		pages[2] = new AdminList(this); //관리자 목록 객체는 ShoPMain 인스턴스 주소값을 원함
-		pages[3] = new AdminRegist(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
-		pages[4] = new Login(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[PRODUCT_REGIST] = new ProductRegist(this); //상품 등록 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[PRODUCT_LIST] = new ProductList(this); //상품 목록 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[ADMIN_LIST] = new AdminList(this); //관리자 목록 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[ADMIN_REGIST] = new AdminRegist(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
+		pages[LOGIN] = new Login(this); //로그인 객체는 ShoPMain 인스턴스 주소값을 원함
 		
 		//5페이지 중 누구를 보여줄지를 생성시점에 결정하자 
 		showHide(pages.length-1);//로그이인인 마지막 페이지부터 보자

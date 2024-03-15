@@ -3,6 +3,9 @@ package com.sds.seshop.product;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,11 +44,51 @@ public class ProductList extends Page{
 		//조립 
 		container.add(scroll); //센터에 부착됨 
 		container.add(p_south, BorderLayout.SOUTH); //south 에 부착
-		
-		
 		add(container);
 	}
+	
+	//상품 가져오기 
+	public void getProductList() {
+		PreparedStatement pstmt=null; //쿼리실행 객체
+		ResultSet rs=null; //표를 표현한 객체 
+		
+		String sql="select * from product order by product_idx asc"; //오름차순
+		
+		try {
+			pstmt=shopMain.con.prepareStatement(sql); //쿼리 실행 객체 생성 
+			rs = pstmt.executeQuery(); //쿼리실행 후  결과 받기
+			
+			//기존의 컨트롤러가 보유한 list를 싸악~~비우고 채우자
+			model.list.removeAll(model.list);
+			
+			while(rs.next()) { //next()가 true를 반환할때까지 커서 전진
+				String[] record=new String[6];
+				record[0]=Integer.toString(rs.getInt("product_idx"));
+				record[1]=rs.getString("product_name");
+				record[2]=Integer.toString(rs.getInt("price"));
+				record[3]=rs.getString("brand");
+				record[4]=rs.getString("filename");
+				record[5]=Integer.toString(rs.getInt("subcategory_idx"));
+				
+				//완성된 하나의 배열을 컨트롤러가 보유한 list 에 추가하자 
+				model.list.add(record);
+			}
+			
+			System.out.println("컨트롤러에 현재까지 채워진 레코드 수는 "+model.list.size());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
+
+
+
+
+
+
 
 
 
